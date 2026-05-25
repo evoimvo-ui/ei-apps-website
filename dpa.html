@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ei-apps — Aplikacije za lakši život i poslovanje</title>
+<link rel="icon" type="image/png" href="/Logowebapp.png">
+<link rel="apple-touch-icon" href="/Logowebapp.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue: #4F7EF7;
+  --blue-dark: #3A6BEA;
+  --blue-light: #EEF4FF;
+  --blue-mid: #C3D8FF;
+  --text: #111827;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --bg: #ffffff;
+  --bg-2: #F9FAFB;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --green-bg: #ECFDF5;
+  --green-text: #065F46;
+  --green-border: #A7F3D0;
+  --amber-bg: #FFFBEB;
+  --amber-text: #92400E;
+  --amber-border: #FCD34D;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-logo {
+  height: 1em;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+.nav-logo em, .hero h1 em, .footer-logo em { font-style: normal; color: var(--blue); }
+
+.nav-logo span, .hero h1 span, .footer-logo span {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.nav-links a {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.lang-wrapper { position: relative; }
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-2);
+  transition: border-color 0.15s;
+}
+.lang-btn:hover { border-color: var(--blue); color: var(--text); }
+.lang-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  min-width: 172px;
+  display: none;
+  z-index: 300;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text);
+  transition: background 0.1s;
+}
+.lang-option:hover { background: var(--bg-2); }
+.lang-option.active { color: var(--blue); font-weight: 500; }
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center;
+  padding: 80px 24px 72px;
+  background: linear-gradient(160deg, #F0F5FF 0%, #F9FAFB 60%, #fff 100%);
+  border-bottom: 1px solid var(--border-light);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--blue-light);
+  border: 1px solid var(--blue-mid);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--blue);
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+.hero h1 {
+  font-size: clamp(36px, 6vw, 58px);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.hero h1 em { font-style: normal; color: var(--blue); }
+.hero-tagline {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: var(--text-2);
+  font-weight: 400;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-3);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.65;
+}
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 13px 28px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.btn-secondary {
+  padding: 13px 28px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.1s;
+}
+.btn-secondary:hover { border-color: var(--text-2); background: var(--bg-2); }
+
+/* ─── SECTIONS ─── */
+.section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+.section-full { padding: 80px 40px; background: var(--bg-2); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+.section-full .inner { max-width: 1200px; margin: 0 auto; }
+
+.section-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--text-2);
+  margin-bottom: 48px;
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+/* ─── APPS ─── */
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+.app-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.app-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue-mid); }
+.app-card-coming { opacity: 0.55; border-style: dashed; }
+.app-card-coming:hover { box-shadow: var(--shadow-sm); border-color: var(--border); }
+
+.app-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--blue-light);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.app-icon svg { width: 26px; height: 26px; stroke: var(--blue); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.app-name { font-size: 19px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.app-desc { font-size: 15px; color: var(--text-2); line-height: 1.65; margin-bottom: 24px; }
+.app-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.pill {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+.pill-free { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+.pill-premium { background: var(--amber-bg); color: var(--amber-text); border-color: var(--amber-border); }
+
+.app-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+.app-btn:hover { background: var(--blue-dark); }
+
+/* ─── STEPS ─── */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+  counter-reset: step;
+}
+.step { display: flex; flex-direction: column; gap: 12px; }
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-title { font-size: 16px; font-weight: 600; color: var(--text); }
+.step-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+
+/* ─── FEATURES ─── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.feat {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+.feat-icon { font-size: 26px; margin-bottom: 14px; }
+.feat-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.feat-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+
+/* ─── USER PROFILES SHOWCASE ─── */
+.profiles-showcase {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.profile-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 5/4;
+  box-shadow: var(--shadow-md);
+  cursor: default;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.profile-card:hover img {
+  transform: scale(1.04);
+}
+
+/* Gradient overlay at bottom */
+.profile-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(10, 15, 30, 0.55) 75%,
+    rgba(10, 15, 30, 0.82) 100%
+  );
+  pointer-events: none;
+}
+
+.profile-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 20px 20px 22px;
+}
+
+.profile-label-role {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+.profile-label-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.profile-label-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(79, 126, 247, 0.25);
+  border: 1px solid rgba(79, 126, 247, 0.45);
+  border-radius: 100px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  backdrop-filter: blur(6px);
+}
+
+.profile-label-tag svg {
+  width: 10px;
+  height: 10px;
+  stroke: rgba(255,255,255,0.8);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* ─── PRICING (non-interactive, info only) ─── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.pc {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+}
+.pc.featured { border: 2px solid var(--blue); position: relative; }
+.pc-badge {
+  display: inline-block;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.pc-name { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.pc-price {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.pc-price small { font-size: 14px; font-weight: 400; color: var(--text-2); letter-spacing: 0; }
+.pc-desc { font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
+.pc-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 16px; }
+.pc-feat {
+  font-size: 14px;
+  color: var(--text-2);
+  padding: 5px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.pc-feat::before {
+  content: "✓";
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── FAQ ─── */
+.faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 680px; }
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.faq-q {
+  padding: 18px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.1s;
+}
+.faq-q:hover { background: var(--bg-2); }
+.faq-toggle {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-2);
+  transition: background 0.15s;
+}
+.faq-item.open .faq-toggle { background: var(--blue-light); color: var(--blue); border-color: var(--blue-mid); }
+.faq-a {
+  padding: 0 20px;
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, padding 0.2s ease;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 20px 18px; }
+
+/* ─── FOOTER ─── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  background: var(--bg-2);
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo { 
+  font-size: 17px; 
+  font-weight: 600; 
+  color: var(--text-2); 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  text-decoration: none;
+}
+.footer-logo em { font-style: normal; color: var(--blue); }
+.footer-copy { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-link { font-size: 14px; color: var(--text-2); cursor: pointer; transition: color 0.15s; }
+.footer-link:hover { color: var(--text); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .profiles-showcase {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .profile-label-name { font-size: 14px; }
+}
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; height: 56px; }
+  .nav-logo { font-size: 19px; }
+  .nav-links { display: none; }
+  .hero { padding: 56px 20px 52px; }
+  .section { padding: 56px 20px; }
+  .section-full { padding: 56px 20px; }
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer { padding: 32px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-logo { font-size: 16px; }
+  .hero h1 { letter-spacing: -0.8px; }
+  .profiles-showcase {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .profile-label { padding: 14px 14px 16px; }
+  .profile-label-role { display: none; }
+  .profile-label-name { font-size: 13px; margin-bottom: 6px; }
+}
+@media (max-width: 480px) {
+  .nav { padding: 0 16px; }
+  .nav-logo { font-size: 18px; }
+  .hero { padding: 48px 16px 44px; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .hero-btns .btn-primary, .hero-btns .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+  .section { padding: 48px 16px; }
+  .section-full { padding: 48px 16px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .section-title { font-size: 24px; }
+  .apps-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .footer { padding: 28px 16px; }
+  .footer-logo { font-size: 15px; }
+  .footer-links { gap: 16px; }
+  .app-card { padding: 24px; }
+  .pc { padding: 22px; }
+  .profiles-showcase {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .profile-card {
+    aspect-ratio: 16/9;
+  }
+  .profile-card img {
+    object-position: center center;
+  }
+}
+</style>
+
+  
+<style>
+  .legal-page { padding: 40px 20px 80px; max-width: 800px; margin: 0 auto; }
+  .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); text-decoration: none; font-size: 14px; margin-bottom: 32px; transition: color 0.15s; font-weight: 500; }
+  .back-link:hover { color: var(--blue); }
+  .legal-header { margin-bottom: 48px; }
+  .legal-title { font-size: 32px; font-weight: 600; color: var(--text); margin-bottom: 24px; }
+  
+  .lang-toggle-wrap { display: flex; gap: 8px; margin-top: 16px; }
+  .lang-toggle-btn { 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-2);
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+  .lang-toggle-btn:hover { border-color: var(--blue); color: var(--text); }
+  .lang-toggle-btn.active { background: var(--blue-light); border-color: var(--blue-mid); color: var(--blue); font-weight: 500; }
+  
+  .legal-content { font-size: 15px; color: var(--text-2); line-height: 1.7; }
+  .legal-content h1 { font-size: 20px; font-weight: 600; color: var(--text); margin: 40px 0 16px; }
+  .legal-content h2 { font-size: 17px; font-weight: 600; color: var(--text); margin: 32px 0 12px; }
+  .legal-content p { margin-bottom: 16px; }
+  .legal-content ul, .legal-content ol { margin-bottom: 24px; padding-left: 20px; }
+  .legal-content li { margin-bottom: 8px; }
+  .legal-content strong { color: var(--text); }
+  
+  .legal-content table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+  .legal-content th, .legal-content td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+  .legal-content th { background: var(--bg-2); font-weight: 600; color: var(--text); }
+
+  #content-bs { display: none; }
+  #content-en { display: block; }
+</style>
+
+</head>
+<body>
+  <nav class="nav">
+  <a class="nav-logo" href="#"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+  <div class="nav-links">
+    <a href="#apps" data-t="nav-apps">Aplikacije</a>
+    <a href="#how" data-t="nav-how">Kako početi</a>
+    <a href="#pricing" data-t="nav-pricing">Cijene</a>
+    <a href="#faq" data-t="nav-faq">FAQ</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-wrapper">
+      <button class="lang-btn" onclick="toggleLang(event)">
+        <span id="lang-flag">🇬🇧</span>
+        <span id="lang-name">English</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.5l3 3 3-3"/></svg>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <div class="lang-option" onclick="setLang('bs','🇧🇦','Bosanski',this)">🇧🇦 Bosanski</div>
+        <div class="lang-option active" onclick="setLang('en','🇬🇧','English',this)">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('de','🇩🇪','Deutsch',this)">🇩🇪 Deutsch</div>
+        <div class="lang-option" onclick="setLang('fr','🇫🇷','Français',this)">🇫🇷 Français</div>
+        <div class="lang-option" onclick="setLang('es','🇪🇸','Español',this)">🇪🇸 Español</div>
+        <div class="lang-option" onclick="setLang('it','🇮🇹','Italiano',this)">🇮🇹 Italiano</div>
+      </div>
+    </div>
+  </div>
+</nav>
+  
+  <main class="legal-page">
+    <a href="index.html" class="back-link">← Back to ei-apps</a>
+    
+    <header class="legal-header">
+      <h1 class="legal-title">Data Processing Agreement</h1>
+      
+    </header>
+    
+    <div class="legal-content"><p><strong>DATA PROCESSING AGREEMENT</strong></p><p>Data Processing Agreement (DPA) — ei-apps Platform</p><table><tr><td><p><strong>Document Version</strong></p></td><td><p>1.0</p></td></tr><tr><td><p><strong>Effective Date</strong></p></td><td><p>22.05.2026.</p></td></tr><tr><td><p><strong>Data Controller</strong></p></td><td><p>O.D. “Ei-APPS” vl. Ibrahimović Emir (hereinafter: Controller)</p></td></tr><tr><td><p><strong>Data Processor</strong></p></td><td><p>O.D. “Ei-APPS” vl. Ibrahimović Emir — owner of the ei-apps platform (hereinafter: Processor)</p></td></tr><tr><td><p><strong>Processor Address</strong></p></td><td><p>Stupska 19 AII, Ilidža, FBiH, Bosnia and Herzegovina</p></td></tr><tr><td><p><strong>Processor JIB/Tax ID</strong></p></td><td><p>4304382050006</p></td></tr><tr><td><p><strong>Email</strong></p></td><td><p>info@ei-apps.com</p></td></tr><tr><td><p><strong>Web</strong></p></td><td><p>https://ei-apps.com</p></td></tr></table><p><strong>Preamble</strong></p><p>This Data Processing Agreement (hereinafter: DPA or Addendum) forms an integral part of the Terms of Service of the ei-apps platform (hereinafter: Main Agreement) and governs the processing of personal data entered by the Controller into the applications of the ei-apps Platform, which are processed by the Processor on behalf of the Controller.</p><p>This Addendum is aligned and complies with:</p><ul><li>The Law on Personal Data Protection of Bosnia and Herzegovina (Official Gazette of BiH No. 49/06, 76/11, 89/11)</li><li>The EU General Data Protection Regulation (GDPR — Regulation EU 2016/679), specifically Article 28</li><li>The EU Commission's Standard Contractual Clauses (SCC) where applicable</li></ul><p>In the event of any conflict between the provisions of this Addendum and the Main Agreement, the provisions of this Addendum shall prevail in all matters relating to the processing of personal data.</p><p><strong>1. Definitions</strong></p><p>For the purposes of this Addendum, the following definitions shall apply:</p><ul><li>Personal Data — any information relating to an identified or identifiable natural person (data subject).</li><li>Processing — any operation or set of operations performed on personal data (collection, storage, use, disclosure, deletion, etc.).</li><li>Controller — the user of the ei-apps platform who determines the purposes and means of the processing of personal data of third parties entered into the applications.</li><li>Processor — O.D. “Ei-APPS” vl. Ibrahimović Emir, which processes personal data on behalf of the Controller through the infrastructure of the ei-apps platform.</li><li>Subprocessor — a third party engaged by the Processor to process personal data with the prior consent of the Controller.</li><li>Data Breach — a security incident leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, personal data.</li><li>Platform — ei-apps and all its web applications, services, and infrastructure.</li><li>GDPR — the EU General Data Protection Regulation No. 2016/679.</li></ul><p><strong>2. Subject Matter, Nature, and Purpose of Processing</strong></p><p><strong>2.1 Subject Matter of Processing</strong></p><p>The Processor processes personal data entered by the Controller into the Platform applications solely for the purpose of providing the services set out in the Main Agreement — technical delivery of application functionalities, storage, backups, and display of data to the Controller and authorized users.</p><p><strong>2.2 Categories of Data</strong></p><p>The Processor may process the following categories of personal data entered by the Controller:</p><ul><li>Identification data: first and last name of third parties (clients, customers, patients, etc.)</li><li>Contact data: phone number, email address</li><li>Business data: appointment, type of service, notes about the service, visit history</li><li>Other data entered voluntarily by the Controller into the application fields</li></ul><p><em>The Processor does not request the Controller to enter special categories of personal data (health data, biometric data, etc.). If the Controller enters such data, they do so solely at their own risk and under the obligation to possess an appropriate legal basis.</em></p><p><strong>2.3 Categories of Data Subjects</strong></p><p>The data may concern the following categories of natural persons:</p><ul><li>Clients, customers, patients, or other business contacts of the Controller</li><li>Employees or associates of the Controller (to the extent that the Controller enters their data)</li></ul><p><strong>2.4 Duration of Processing</strong></p><p>The Processor processes personal data for the Controller's needs as long as the Controller's account is active on the Platform. Upon termination of the Agreement or deletion of the account, the Processor deletes all data within 30 days, unless longer retention is required due to legal obligations.</p><p><strong>3. Obligations of the Processor</strong></p><p><strong>3.1 Processing Solely on Instructions</strong></p><p>The Processor processes personal data solely in accordance with the documented instructions of the Controller, unless processing is necessary to comply with a legal obligation to which the Processor is subject — in which case the Processor shall inform the Controller before processing, unless that law prohibits such information.</p><p><strong>3.2 Confidentiality</strong></p><p>The Processor ensures that all authorized persons who have access to personal data are bound by an obligation of confidentiality or a statutory obligation of secrecy. Access to data is limited strictly to personnel who need it to perform their work (need-to-know principle).</p><p><strong>3.3 Technical and Organisational Measures</strong></p><p>The Processor implements the following technical and organizational protection measures (in accordance with Art. 32 GDPR):</p><ul><li>Authentication and access control via Firebase Authentication</li><li>Firestore Security Rules — data isolation per user/account</li><li>Access control at the collection level in MongoDB Atlas</li><li>Encryption of data in transit (HTTPS/TLS 1.2+)</li><li>Encryption of data at rest at the infrastructure level (Google Cloud and MongoDB Atlas)</li><li>Regular security reviews and monitoring of access anomalies</li><li>Incident and data breach response plan</li></ul><p><strong>3.4 Subprocessors</strong></p><p>The Controller hereby grants a general written authorization for the engagement of the following subprocessors:</p><table><tr><td><p><strong>Subprocessor</strong></p></td><td><p><strong>Purpose</strong></p></td><td><p><strong>Data Location</strong></p></td></tr><tr><td><p>Google Firebase / Firestore</p></td><td><p>Data storage, authentication</p></td><td><p>EU (europe-west1, Belgium)</p></td></tr><tr><td><p>MongoDB Atlas (MongoDB, Inc.)</p></td><td><p>Data storage</p></td><td><p>EU region</p></td></tr><tr><td><p>Paddle.com (Paddle Europe S.R.L.)</p></td><td><p>Payment processing (does not receive third-party personal data from the app)</p></td><td><p>EU / Global</p></td></tr></table><p>The Processor shall inform the Controller of any intended changes (addition or replacement of subprocessors) within a reasonable time in advance, giving the Controller the opportunity to object. The Processor ensures that each subprocessor provides the same data protection guarantees as provided in this Addendum.</p><p><strong>3.5 Assistance to the Controller</strong></p><p>The Processor provides technical and organizational assistance to the Controller in fulfilling the following data subject rights:</p><ul><li>Right of access (Art. 15 GDPR)</li><li>Right to rectification (Art. 16 GDPR)</li><li>Right to erasure / to be forgotten (Art. 17 GDPR)</li><li>Right to restriction of processing (Art. 18 GDPR)</li><li>Right to data portability (Art. 20 GDPR)</li><li>Right to object (Art. 21 GDPR)</li></ul><p>The Processor endeavors to fulfill the Controller's requests regarding the above within 30 days of receiving the request.</p><p><strong>3.6 Security of Processing &amp; Breach Assistance</strong></p><p>Taking into account the nature of processing and the information available to the Processors, the Processor assists the Controller in ensuring compliance with the obligations under Art. 32–36 GDPR, including:</p><ul><li>Security of processing operations</li><li>Notifying the supervisory authority of a data breach</li><li>Informing the data subject of a breach</li><li>Data protection impact assessment (DPIA) where necessary</li></ul><p><strong>3.7 Deletion or Return of Data</strong></p><p>Upon termination of the provision of services, the Processor shall, at the choice of the Controller:</p><ul><li>Delete all personal data and confirm deletion to the Controller, OR</li><li>Return the data to the Controller in a machine-readable format (JSON or CSV) — upon written request within 30 days of termination of the agreement</li></ul><p>The Processor has the right to retain data longer solely if it is necessary to fulfill a legal obligation applicable to the Processor.</p><p><strong>3.8 Audit Rights</strong></p><p>The Processor makes available to the Controller all information necessary to demonstrate compliance with the obligations under this Addendum and the GDPR. The Controller or an authorized auditor may conduct an inspection or audit upon at least 30 days' prior written notice, within a reasonable scope and respecting the confidentiality of third-party information.</p><p><strong>4. Obligations of the Controller</strong></p><p>The Controller undertakes to:</p><ul><li>Process third-party personal data in accordance with applicable data protection laws.</li><li>Possess an appropriate legal basis for each entry and processing of third-party personal data via the Platform.</li><li>Inform data subjects about the processing in accordance with Art. 13 and 14 GDPR (transparency).</li><li>Enter only data that is necessary for lawful business purposes (data minimization principle).</li><li>Not enter special categories of personal data (health, biometric, genetic data, data on criminal liability, etc.) without a separate written agreement with the Processor.</li><li>Timely inform the Processor of changes that could affect the processing.</li></ul><p><strong>5. Data Breach — Notification Procedure</strong></p><p>In the event of becoming aware of a security breach of personal data processed by the Processor on behalf of the Controller, the Processor shall:</p><ul><li>Notify the Controller without undue delay, and in any case within 72 hours of becoming aware of the breach.</li><li>Provide the Controller with at least the following information:</li><li>Description of the nature of the breach, including categories and approximate number of data subjects and records affected.</li><li>Contact details of the data protection officer or other contact point.</li><li>Likely consequences of the breach.</li><li>Measures taken or proposed to address the breach and mitigate its possible adverse effects.</li></ul><p>The Controller is responsible for the decision to notify the supervisory authority (Personal Data Protection Agency of BiH — azlp.ba) and/or the affected data subjects, within the statutory timeframes.</p><p><strong>6. International Data Transfers</strong></p><p>All personal data processed under this Addendum is stored and processed within the European Economic Area (EEA), on Google Cloud servers (europe-west1, Belgium) and MongoDB Atlas (EU region).</p><p>In the event that a subprocessor must transfer data outside the EEA, such transfer shall be carried out solely with the application of appropriate safeguards in accordance with Chapter V of the GDPR:</p><ul><li>Standard Contractual Clauses of the EU Commission (SCC)</li><li>Certification under the EU-US Data Privacy Framework (where applicable)</li><li>Other transfer mechanisms provided for in Article 46 GDPR</li></ul><p><strong>7. Duration and Termination of the Addendum</strong></p><p>This Addendum remains in force for as long as the Controller uses the services of the ei-apps Platform. The Addendum terminates automatically upon termination of the Main Agreement (Terms of Service), provided that obligations under Section 3.7 (deletion/return of data) and Section 5 (breach notification) shall survive termination.</p><p><strong>8. Liability</strong></p><p>The Processor shall be liable to the Controller for damages caused by a breach of this DPA or the GDPR that is directly attributable to the Processor, to the extent that the Processor cannot avail itself of the exemption in Art. 82(3) GDPR. The Processor's total liability is limited to the amount provided for in the Main Agreement.</p><p>The Controller remains liable to third parties for the lawfulness of data processing as controller, including ensuring an appropriate legal basis for processing.</p><p><strong>9. Amendments to the Addendum</strong></p><p>The Processor may amend this DPA to reflect new legal requirements or changes to infrastructure, with at least 30 days' prior notice to the Controller. A Controller who does not accept the amendments has the right to terminate the Agreement in accordance with the Terms of Service.</p><p><strong>10. Governing Law</strong></p><p>This Addendum is governed by the laws of Bosnia and Herzegovina / Federation of Bosnia and Herzegovina. In the event of a dispute, the Općinski sud in Sarajevo shall have jurisdiction. EU consumers may use the ODR platform: ec.europa.eu/consumers/odr</p><p><strong>11. Signatories</strong></p><p>This Addendum becomes binding upon the Controller's acceptance of the Terms of Service of the ei-apps platform, whereby the Controller is deemed to have carefully read and accepted all provisions of this Addendum. For a written or signed copy, please contact: info@ei-apps.com</p><table><tr><td><p><strong>DATA CONTROLLER</strong></p><p>Full name: _________________________</p><p>Title: _____________________________</p><p>Signature: _________________________</p><p>Date: ______________________________</p></td><td><p><strong>DATA PROCESSOR</strong></p><p>Full name: _________________________</p><p>Title: _____________________________</p><p>Signature: _________________________</p><p>Date: ______________________________</p></td></tr></table><p><em>© 2026 ei-apps. All rights reserved. | Version 1.0 | https://ei-apps.com/dpa</em></p></div>
+  </main>
+  
+  <footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a class="footer-logo" href="#"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+      <div class="footer-copy" data-t="footer-copy">© 2026 ei-apps. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="privacy-policy.html" class="footer-link" data-t="ft-privacy">Privacy policy</a>
+      <a href="tos.html" class="footer-link" data-t="ft-terms">Terms of use</a>
+      <a href="dpa.html" class="footer-link">DPA</a>
+      <a href="mailto:info@ei-apps.com" class="footer-link" data-t="ft-contact">Contact</a>
+    </div>
+  </div>
+</footer>
+  
+    <script>
+      // Existing nav toggle logic
+      function toggleLang(e) {
+        e.stopPropagation();
+        document.getElementById('lang-dropdown').classList.toggle('open');
+      }
+      window.onclick = function() {
+        const dd = document.getElementById('lang-dropdown');
+        if (dd) dd.classList.remove('open');
+      }
+    </script>
+  
+</body>
+</html>
