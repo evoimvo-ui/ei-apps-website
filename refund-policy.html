@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ei-apps — Refund Policy</title>
+  <link rel="icon" type="image/png" href="/Logowebapp.png">
+  <link rel="apple-touch-icon" href="/Logowebapp.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #4F7EF7;
+      --blue-dark: #3A6BEA;
+      --blue-light: #EEF4FF;
+      --blue-mid: #C3D8FF;
+      --text: #111827;
+      --text-2: #6B7280;
+      --text-3: #9CA3AF;
+      --bg: #ffffff;
+      --bg-2: #F9FAFB;
+      --border: #E5E7EB;
+      --border-light: #F3F4F6;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo {
+      height: 1em;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+    .nav-logo em { font-style: normal; color: var(--blue); }
+
+    .nav-logo span {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .lang-wrapper { position: relative; }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-2);
+      transition: border-color 0.15s;
+    }
+    .lang-btn:hover { border-color: var(--blue); color: var(--text); }
+    .lang-dropdown {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      min-width: 172px;
+      display: none;
+      z-index: 300;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .lang-dropdown.open { display: block; }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--text);
+      transition: background 0.1s;
+    }
+    .lang-option:hover { background: var(--bg-2); }
+    .lang-option.active { color: var(--blue); font-weight: 500; }
+
+    /* ─── LEGAL PAGE STYLES ─── */
+    .legal-page { padding: 40px 20px 80px; max-width: 800px; margin: 0 auto; min-height: calc(100vh - 64px - 140px); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); text-decoration: none; font-size: 14px; margin-bottom: 32px; transition: color 0.15s; font-weight: 500; }
+    .back-link:hover { color: var(--blue); }
+    .legal-header { margin-bottom: 48px; }
+    .legal-title { font-size: 32px; font-weight: 600; color: var(--text); margin-bottom: 24px; }
+    
+    .lang-toggle-wrap { display: flex; gap: 8px; margin-top: 16px; }
+    .lang-toggle-btn { 
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-2);
+      transition: all 0.15s;
+      font-weight: 400;
+    }
+    .lang-toggle-btn:hover { border-color: var(--blue); color: var(--text); }
+    .lang-toggle-btn.active { background: var(--blue-light); border-color: var(--blue-mid); color: var(--blue); font-weight: 500; }
+    
+    .legal-content { font-size: 15px; color: var(--text-2); line-height: 1.7; }
+    .legal-content h1 { font-size: 20px; font-weight: 600; color: var(--text); margin: 40px 0 16px; }
+    .legal-content p { margin-bottom: 16px; }
+    .legal-content strong { color: var(--text); }
+    .legal-content a { color: var(--blue); text-decoration: none; }
+    .legal-content a:hover { text-decoration: underline; }
+
+    #content-bs { display: none; }
+    #content-en { display: block; }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      background: var(--bg-2);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo { 
+      font-size: 17px; 
+      font-weight: 600; 
+      color: var(--text-2); 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      text-decoration: none;
+    }
+    .footer-logo em { font-style: normal; color: var(--blue); }
+    .footer-copy { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-link { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-link:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; height: 56px; }
+      .footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-logo" href="index.html"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+    <div class="nav-right">
+      <div class="lang-wrapper">
+        <button class="lang-btn" onclick="toggleLang(event)">
+          <span id="lang-flag">🇬🇧</span>
+          <span id="lang-name">English</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.5l3 3 3-3"/></svg>
+        </button>
+        <div class="lang-dropdown" id="lang-dropdown">
+          <div class="lang-option" onclick="setLang('bs','🇧🇦','Bosanski',this)">🇧🇦 Bosanski</div>
+          <div class="lang-option active" onclick="setLang('en','🇬🇧','English',this)">🇬🇧 English</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="legal-page">
+    <a href="index.html" class="back-link">← Back to ei-apps</a>
+    
+    <header class="legal-header">
+      <h1 class="legal-title" id="page-title">Refund Policy</h1>
+      
+      <div class="lang-toggle-wrap">
+        <button class="lang-toggle-btn active" id="btn-en" onclick="switchLang('en')">English</button>
+        <button class="lang-toggle-btn" id="btn-bs" onclick="switchLang('bs')">Bosanski</button>
+      </div>
+    </header>
+    
+    <div id="content-en" class="legal-content">
+      <h1>Refund Policy</h1>
+      <p>All payments on the ei-apps platform are processed by <strong>Paddle.com</strong>, acting as Merchant of Record for all orders.</p>
+      <p>Refund requests are reviewed in accordance with Paddle policies and applicable consumer protection laws. To initiate a refund request, contact Paddle customer support directly at: <a href="https://paddle.com" target="_blank">https://paddle.com</a></p>
+      <p>EU/EEA consumers are entitled to rights under the Consumer Rights Directive (2011/83/EU), including the right of withdrawal within 14 days, subject to possible limitations for digital services that have been actively used.</p>
+      <p><strong>Contact:</strong> info@ei-apps.com</p>
+    </div>
+
+    <div id="content-bs" class="legal-content">
+      <h1>Politika povrata novca</h1>
+      <p>Sva plaćanja na ei-apps platformi obrađuje <strong>Paddle.com</strong> koji nastupa kao Merchant of Record za sve narudžbe.</p>
+      <p>Zahtjevi za povrat razmatraju se u skladu s Paddle pravilima i važećim zakonima o zaštiti potrošača. Za pokretanje zahtjeva za povrat korisnici se obraćaju direktno Paddle korisničkoj podršci na: <a href="https://paddle.com" target="_blank">https://paddle.com</a></p>
+      <p>Potrošači iz EU/EEA imaju prava predviđena Direktivom o pravima potrošača (2011/83/EU), uključujući pravo na odustanak od ugovora u roku od 14 dana, uz moguća ograničenja za digitalne usluge koje su aktivno korištene.</p>
+      <p><strong>Kontakt:</strong> info@ei-apps.com</p>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <a class="footer-logo" href="index.html"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+        <div class="footer-copy">© 2026 ei-apps. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="privacy-policy.html" class="footer-link">Privacy policy</a>
+        <a href="tos.html" class="footer-link">Terms of use</a>
+        <a href="refund-policy.html" class="footer-link">Refund policy</a>
+        <a href="dpa.html" class="footer-link">DPA</a>
+        <a href="mailto:info@ei-apps.com" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    function switchLang(lang) {
+      document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
+      document.getElementById('content-bs').style.display = lang === 'bs' ? 'block' : 'none';
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-bs').classList.toggle('active', lang === 'bs');
+      document.getElementById('page-title').textContent = lang === 'en' ? 'Refund Policy' : 'Politika povrata novca';
+    }
+    
+    function toggleLang(e) {
+      e.stopPropagation();
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function setLang(code, flag, name, el) {
+      document.getElementById('lang-flag').textContent = flag;
+      document.getElementById('lang-name').textContent = name;
+      document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
+      el.classList.add('active');
+      switchLang(code === 'bs' ? 'bs' : 'en');
+    }
+
+    window.onclick = function() {
+      const dd = document.getElementById('lang-dropdown');
+      if (dd) dd.classList.remove('open');
+    }
+  </script>
+</body>
+</html>
