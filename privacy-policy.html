@@ -705,6 +705,7 @@ body {
   <div class="nav-links">
     <a href="#apps" data-t="nav-apps">Aplikacije</a>
     <a href="#how" data-t="nav-how">Kako početi</a>
+    <a href="#why" data-t="nav-why">Zašto ei-apps</a>
     <a href="#pricing" data-t="nav-pricing">Cijene</a>
     <a href="#faq" data-t="nav-faq">FAQ</a>
   </div>
@@ -763,6 +764,32 @@ body {
 </footer>
   
     <script>
+      const T_NAV = {
+        bs: {'nav-apps':'Aplikacije','nav-how':'Kako početi','nav-why':'Zašto ei-apps','nav-pricing':'Cijene','nav-faq':'FAQ','ft-privacy':'Politika privatnosti','ft-terms':'Uslovi korištenja','ft-contact':'Kontakt'},
+        en: {'nav-apps':'Apps','nav-how':'How to start','nav-why':'Why ei-apps','nav-pricing':'Pricing','nav-faq':'FAQ','ft-privacy':'Privacy policy','ft-terms':'Terms of use','ft-contact':'Contact'},
+        de: {'nav-apps':'Apps','nav-how':'Wie starten','nav-why':'Warum ei-apps','nav-pricing':'Preise','nav-faq':'FAQ','ft-privacy':'Datenschutzrichtlinie','ft-terms':'Nutzungsbedingungen','ft-contact':'Kontakt'},
+        fr: {'nav-apps':'Applications','nav-how':'Démarrer','nav-why':'Pourquoi ei-apps','nav-pricing':'Tarifs','nav-faq':'FAQ','ft-privacy':'Politique de confidentialité','ft-terms':'Conditions d\'utilisation','ft-contact':'Contact'},
+        es: {'nav-apps':'Aplicaciones','nav-how':'Cómo empezar','nav-why':'Por qué ei-apps','nav-pricing':'Precios','nav-faq':'FAQ','ft-privacy':'Política de privacidad','ft-terms':'Términos de uso','ft-contact':'Contacto'},
+        it: {'nav-apps':'Applicazioni','nav-how':'Come iniziare','nav-why':'Perché ei-apps','nav-pricing':'Prezzi','nav-faq':'FAQ','ft-privacy':'Informativa sulla privacy','ft-terms':'Termini di utilizzo','ft-contact':'Contatto'}
+      };
+
+      function applyNavLang(lang) {
+        const d = T_NAV[lang];
+        if (!d) return;
+        document.querySelectorAll('[data-t]').forEach(el => {
+          const key = el.getAttribute('data-t');
+          if (d[key] !== undefined) el.textContent = d[key];
+        });
+      }
+
+      function setLang(lang, flag, name, el) {
+        document.getElementById('lang-flag').textContent = flag;
+        document.getElementById('lang-name').textContent = name;
+        document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+        el.classList.add('active');
+        applyNavLang(lang);
+      }
+
       function switchLang(lang) {
         document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
         document.getElementById('content-bs').style.display = lang === 'bs' ? 'block' : 'none';
