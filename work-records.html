@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Records — How it works | ei-apps</title>
+<link rel="icon" type="image/png" href="/Logowebapp.png">
+<link rel="apple-touch-icon" href="/Logowebapp.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue: #4F7EF7;
+  --blue-dark: #3A6BEA;
+  --blue-light: #EEF4FF;
+  --blue-mid: #C3D8FF;
+  --text: #111827;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --bg: #ffffff;
+  --bg-2: #F9FAFB;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --green-bg: #ECFDF5;
+  --green-text: #065F46;
+  --green-border: #A7F3D0;
+  --amber-bg: #FFFBEB;
+  --amber-text: #92400E;
+  --amber-border: #FCD34D;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 60px; height: 64px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-size: 20px; font-weight: 600; color: var(--text);
+  text-decoration: none; display: flex; align-items: center; gap: 8px;
+}
+.brand-logo { height: 1em; width: auto; display: block; flex-shrink: 0; }
+.nav-logo em { font-style: normal; color: var(--blue); }
+.nav-logo span { display: flex; align-items: center; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a {
+  font-size: 14px; font-weight: 400; color: var(--text-2);
+  text-decoration: none; transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.lang-wrapper { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 12px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); background: var(--bg);
+  cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif;
+  color: var(--text-2); transition: border-color 0.15s;
+}
+.lang-btn:hover { border-color: var(--blue); color: var(--text); }
+.lang-dropdown {
+  position: absolute; right: 0; top: calc(100% + 6px);
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-md); min-width: 172px;
+  display: none; z-index: 300; box-shadow: var(--shadow-md); overflow: hidden;
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; font-size: 14px; cursor: pointer;
+  color: var(--text); transition: background 0.1s;
+}
+.lang-option:hover { background: var(--bg-2); }
+.lang-option.active { color: var(--blue); font-weight: 500; }
+
+/* ─── BACK LINK ─── */
+.back-bar {
+  padding: 14px 60px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-2);
+}
+.back-link {
+  font-size: 14px; color: var(--text-2); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--blue); }
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center; padding: 72px 60px 64px;
+  background: linear-gradient(160deg, #F0F5FF 0%, #F9FAFB 60%, #fff 100%);
+  border-bottom: 1px solid var(--border-light);
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--blue-light); border: 1px solid var(--blue-mid);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 13px; font-weight: 500; color: var(--blue);
+  margin-bottom: 24px; letter-spacing: 0.01em;
+}
+.hero h1 {
+  font-size: clamp(32px, 5vw, 52px); font-weight: 600;
+  letter-spacing: -0.5px; line-height: 1.1; color: var(--text);
+  margin-bottom: 16px;
+}
+.hero h1 em { font-style: normal; color: var(--blue); }
+.hero-tagline {
+  font-size: clamp(15px, 2vw, 18px); color: var(--text-2);
+  font-weight: 400; margin-bottom: 32px; line-height: 1.6;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.hero-btns {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 13px 28px; background: var(--blue); color: #fff;
+  border: none; border-radius: var(--radius-md);
+  font-size: 15px; font-weight: 500; font-family: 'Inter', sans-serif;
+  cursor: pointer; transition: background 0.15s, transform 0.1s;
+  text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.btn-secondary {
+  padding: 13px 28px; background: transparent; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  font-size: 15px; font-weight: 400; font-family: 'Inter', sans-serif;
+  cursor: pointer; transition: border-color 0.15s, background 0.1s;
+  text-decoration: none; display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--text-2); background: var(--bg-2); }
+
+/* ─── FEATURE SECTIONS ─── */
+.features-wrapper { padding: 0 60px; }
+
+.feature-section {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 64px;
+  align-items: start;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.feature-section:last-child { border-bottom: none; }
+
+.feature-section.reverse {
+  grid-template-columns: 1fr 280px;
+}
+.feature-section.reverse .feature-visual { order: 2; }
+.feature-section.reverse .feature-content { order: 1; }
+
+.feature-eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+}
+.feature-title {
+  font-size: clamp(22px, 3vw, 30px); font-weight: 600;
+  letter-spacing: -0.3px; color: var(--text);
+  margin-bottom: 16px; line-height: 1.25;
+}
+.feature-desc {
+  font-size: 15px; color: var(--text-2);
+  line-height: 1.75; margin-bottom: 0;
+}
+.feature-bullets {
+  list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 10px;
+}
+.feature-bullets li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: var(--text-2); line-height: 1.6;
+}
+.feature-bullets li::before {
+  content: "✓"; color: var(--blue); font-weight: 600;
+  font-size: 13px; flex-shrink: 0; margin-top: 1px;
+}
+
+/* ─── SCREENSHOT PLACEHOLDER ─── */
+/* When you add a screenshot, replace the .screenshot-placeholder div with:
+   <img src="screenshots/FILENAME.png" alt="..." class="screenshot-img"> */
+.screenshot-placeholder {
+  width: 100%;
+  aspect-ratio: 9/18;
+  background: var(--bg-2);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-xl);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 24px;
+}
+.ph-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ph-icon { font-size: 36px; }
+.ph-label { font-size: 14px; font-weight: 500; color: var(--text-2); }
+.ph-file { font-size: 11px; color: var(--text-3); font-family: monospace; background: var(--border-light); padding: 3px 8px; border-radius: 4px; }
+.screenshot-img {
+  width: 100%; border-radius: var(--radius-xl);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  display: block;
+}
+
+/* ─── SECTION GENERIC ─── */
+.section { padding: 80px 60px; }
+.section-full { padding: 80px 60px; background: var(--bg-2); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+.section-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+.section-title { font-size: clamp(24px, 4vw, 36px); font-weight: 600; letter-spacing: -0.5px; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
+.section-sub { font-size: 16px; color: var(--text-2); margin-bottom: 48px; line-height: 1.65; max-width: 560px; }
+
+/* ─── PRICING ─── */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.pc { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px; }
+.pc.featured { border: 2px solid var(--blue); position: relative; }
+.pc-badge { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 100px; margin-bottom: 16px; letter-spacing: 0.04em; text-transform: uppercase; }
+.pc-name { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.pc-price { font-size: 32px; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -1px; line-height: 1; }
+.pc-price small { font-size: 14px; font-weight: 400; color: var(--text-2); letter-spacing: 0; }
+.pc-desc { font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
+.pc-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 16px; }
+.pc-feat { font-size: 14px; color: var(--text-2); padding: 5px 0; display: flex; gap: 10px; align-items: flex-start; }
+.pc-feat::before { content: "✓"; color: var(--blue); font-weight: 600; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+/* ─── CTA ─── */
+.cta-section {
+  padding: 80px 60px; text-align: center;
+  background: linear-gradient(135deg, var(--blue-light) 0%, #fff 100%);
+  border-top: 1px solid var(--border-light);
+}
+.cta-title { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.5px; color: var(--text); margin-bottom: 14px; }
+.cta-sub { font-size: 16px; color: var(--text-2); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+/* ─── FOOTER ─── */
+.footer { border-top: 1px solid var(--border); padding: 40px; background: var(--bg-2); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-size: 17px; font-weight: 600; color: var(--text-2); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.footer-logo em { font-style: normal; color: var(--blue); }
+.footer-copy { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-link { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: var(--text); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; height: 56px; }
+  .nav-links { display: none; }
+  .back-bar { padding: 12px 20px; }
+  .hero { padding: 48px 20px 44px; }
+  .features-wrapper { padding: 0 20px; }
+  .feature-section,
+  .feature-section.reverse {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 48px 0;
+  }
+  .feature-section.reverse .feature-visual { order: -1; }
+  .feature-section.reverse .feature-content { order: 0; }
+  .screenshot-placeholder { max-width: 260px; margin: 0 auto; }
+  .section { padding: 56px 20px; }
+  .section-full { padding: 56px 20px; }
+  .cta-section { padding: 56px 20px; }
+  .footer { padding: 32px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .nav { padding: 0 16px; }
+  .hero { padding: 40px 16px 36px; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .hero-btns a { width: 100%; max-width: 280px; text-align: center; }
+  .features-wrapper { padding: 0 16px; }
+  .section { padding: 48px 16px; }
+  .section-full { padding: 48px 16px; }
+  .cta-section { padding: 48px 16px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer { padding: 28px 16px; }
+  .footer-links { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="/"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+  <div class="nav-links">
+    <a href="/#apps" data-t="nav-apps">Apps</a>
+    <a href="/#pricing" data-t="nav-pricing">Pricing</a>
+    <a href="/#faq" data-t="nav-faq">FAQ</a>
+    <a href="https://radna-evidencija.ei-apps.com" data-t="nav-open-app">Open app</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-wrapper">
+      <button class="lang-btn" onclick="toggleLang(event)">
+        <span id="lang-flag">🇬🇧</span>
+        <span id="lang-name">English</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.5l3 3 3-3"/></svg>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <div class="lang-option" onclick="setLang('bs','🇧🇦','Bosanski',this)">🇧🇦 Bosanski</div>
+        <div class="lang-option active" onclick="setLang('en','🇬🇧','English',this)">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('de','🇩🇪','Deutsch',this)">🇩🇪 Deutsch</div>
+        <div class="lang-option" onclick="setLang('fr','🇫🇷','Français',this)">🇫🇷 Français</div>
+        <div class="lang-option" onclick="setLang('es','🇪🇸','Español',this)">🇪🇸 Español</div>
+        <div class="lang-option" onclick="setLang('it','🇮🇹','Italiano',this)">🇮🇹 Italiano</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- BACK BAR -->
+<div class="back-bar">
+  <a href="/" class="back-link" data-t="back-link">← ei-apps.com</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#4F7EF7" stroke-width="2"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M6 8h4M6 5h4M6 11h2"/></svg>
+    <span>Work Records</span>
+  </div>
+  <h1 data-t="hero-title">How it <em>works</em></h1>
+  <p class="hero-tagline" data-t="hero-sub">Everything you need to manage your work, clients and team — in one simple app.</p>
+  <div class="hero-btns">
+    <a href="https://radna-evidencija.ei-apps.com" class="btn-primary" data-t="btn-open">Open app</a>
+    <a href="/#pricing" class="btn-secondary" data-t="btn-pricing">View pricing</a>
+  </div>
+</section>
+
+<!-- FEATURE SECTIONS -->
+<div class="features-wrapper">
+
+  <!-- 1. NEW ENTRY -->
+  <div class="feature-section">
+    <div class="feature-visual">
+      <img src="screenshots/wr-new-entry.png" alt="New Entry screen" class="screenshot-img">
+    </div>
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s1-eyebrow">New Entry</div>
+      <div class="feature-title" data-t="s1-title">Log payments and debts in seconds</div>
+      <p class="feature-desc" data-t="s1-desc">Here you log a payment or debt for a client. Optionally select a client from your existing list or create a new one. Click + in the Service field to add a custom service and set its approximate duration. Choose the entry type — Paid or Debt — enter the amount and save. Entries sync to the cloud automatically.</p>
+      <ul class="feature-bullets">
+        <li data-t="s1-b1">Select or create a client from your list</li>
+        <li data-t="s1-b2">Add custom services with duration</li>
+        <li data-t="s1-b3">Log paid services or outstanding debts</li>
+        <li data-t="s1-b4">Automatic cloud sync after every save</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. APPOINTMENTS -->
+  <div class="feature-section reverse">
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s2-eyebrow">Appointments</div>
+      <div class="feature-title" data-t="s2-title">Schedule and manage client appointments</div>
+      <p class="feature-desc" data-t="s2-desc">Schedule appointments for your clients. Select a date on the calendar, click 'Book appointment', enter the client's name, phone number, time and service. Choose the notification platform — WhatsApp or Viber. The app will remind you 24 hours and 1 hour before the appointment, with the option to send the reminder directly to your client.</p>
+      <ul class="feature-bullets">
+        <li data-t="s2-b1">Calendar view with easy date navigation</li>
+        <li data-t="s2-b2">WhatsApp or Viber client notifications</li>
+        <li data-t="s2-b3">Reminders at 24h and 1h before the appointment</li>
+        <li data-t="s2-b4">Send reminders directly from the app</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <img src="screenshots/wr-appointments.png" alt="Appointments screen" class="screenshot-img">
+    </div>
+  </div>
+
+  <!-- 3. OVERVIEW -->
+  <div class="feature-section">
+    <div class="feature-visual">
+      <img src="screenshots/wr-overview.png" alt="Overview screen" class="screenshot-img">
+    </div>
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s3-eyebrow">Overview</div>
+      <div class="feature-title" data-t="s3-title">Full picture of your earnings and debts</div>
+      <p class="feature-desc" data-t="s3-desc">A full view of all entries with filters by day, week, month and year. For each entry you see: date and time, client name, service, amount and payment status. Debts are clearly marked — click 'Collect' to record a debt payment. Total earnings and outstanding debts are shown at the top. The shop owner sees entries from all workers, while each worker sees only their own.</p>
+      <ul class="feature-bullets">
+        <li data-t="s3-b1">Filter by day, week, month or year</li>
+        <li data-t="s3-b2">Search by client name or service</li>
+        <li data-t="s3-b3">Track and collect outstanding debts</li>
+        <li data-t="s3-b4">Owners see all workers, workers see their own</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. REPORTS -->
+  <div class="feature-section reverse">
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s4-eyebrow">Reports</div>
+      <div class="feature-title" data-t="s4-title">Earnings at a glance, export in one tap</div>
+      <p class="feature-desc" data-t="s4-desc">Earnings statistics for any period with a visual chart. Export all data as a CSV file or print a report directly from the app.</p>
+      <ul class="feature-bullets">
+        <li data-t="s4-b1">Visual earnings chart by day or month</li>
+        <li data-t="s4-b2">Today's earnings always visible</li>
+        <li data-t="s4-b3">Export to CSV for accounting</li>
+        <li data-t="s4-b4">Print-ready report view</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <img src="screenshots/wr-reports.png" alt="Reports screen" class="screenshot-img">
+    </div>
+  </div>
+
+  <!-- 5. CLIENTS -->
+  <div class="feature-section">
+    <div class="feature-visual">
+      <img src="screenshots/wr-clients.png" alt="Clients screen" class="screenshot-img">
+    </div>
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s5-eyebrow">Clients</div>
+      <div class="feature-title" data-t="s5-title">Your client list, always at hand</div>
+      <p class="feature-desc" data-t="s5-desc">Keep a list of your regular clients with their contact details. When logging a new entry or booking an appointment, simply select the client from the list instead of typing their name each time. Create a new client directly from the entry form.</p>
+      <ul class="feature-bullets">
+        <li data-t="s5-b1">Save client name and phone number</li>
+        <li data-t="s5-b2">Quick select when logging entries</li>
+        <li data-t="s5-b3">Quick select when booking appointments</li>
+        <li data-t="s5-b4">Create new clients on the fly</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. SHOP -->
+  <div class="feature-section reverse">
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s6-eyebrow">Shop &amp; Team</div>
+      <div class="feature-title" data-t="s6-title">Invite your team, manage everything together</div>
+      <p class="feature-desc" data-t="s6-desc">Manage your shop — add the services you offer and invite workers by email. Enter the worker's email in the invitation; when they register with that email, they automatically join your shop. Only the owner pays the subscription — workers use the app free of charge within the owner's plan. The owner sees entries, appointments and reports for all workers, while each worker sees only their own data.</p>
+      <ul class="feature-bullets">
+        <li data-t="s6-b1">Invite workers by email — no manual setup</li>
+        <li data-t="s6-b2">Workers join automatically on registration</li>
+        <li data-t="s6-b3">Only the owner pays — workers are free</li>
+        <li data-t="s6-b4">Full team overview for the owner</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <img src="screenshots/wr-shop.png" alt="Shop screen" class="screenshot-img">
+    </div>
+  </div>
+
+</div><!-- /features-wrapper -->
+
+<!-- PRICING -->
+<div id="pricing" class="section">
+  <div class="section-eyebrow" data-t="price-label">Pricing</div>
+  <div class="section-title"><span data-t="price-title-app">Work Records</span> — <span style="font-weight:400" data-t="price-title-suffix">plan overview</span></div>
+  <p class="section-sub" data-t="price-sub">Start free and test all features without restrictions. Upgrade to a paid plan only when you are confident it is the right solution for you.</p>
+  <div class="pricing-grid">
+    <div class="pc">
+      <div class="pc-name" data-t="plan1">Trial period</div>
+      <div class="pc-price" data-t="trial-price">Free <small data-t="plan1-per">/ 30 days</small></div>
+      <div class="pc-desc" data-t="plan1-desc">Full access to all features without time limits. No credit card required.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" data-t="pf1">Unlimited entries</div>
+      <div class="pc-feat" data-t="pf2">Cloud data sync</div>
+      <div class="pc-feat" data-t="pf3">Email support</div>
+    </div>
+    <div class="pc featured">
+      <div class="pc-badge" data-t="popular">Most popular</div>
+      <div class="pc-name" data-t="plan2">Basic subscription</div>
+      <div class="pc-price" data-t="price-basic">From €2.49 <small data-t="plan2-per">/ mo</small></div>
+      <div class="pc-desc" style="font-size:11px;color:var(--text-3);margin-top:4px;margin-bottom:16px" data-t="plan2-subtitle">Price varies by location</div>
+      <div class="pc-desc" data-t="plan2-desc">Ideal for sole traders and small teams who need a reliable daily solution.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" data-t="pf4">Log services, payments, and debts</div>
+      <div class="pc-feat" data-t="pf5">Appointment scheduling</div>
+      <div class="pc-feat" data-t="pf6">WhatsApp/Viber notifications</div>
+      <div class="pc-feat" data-t="pf6b">Daily, weekly, and monthly reports</div>
+    </div>
+    <div class="pc">
+      <div class="pc-name" data-t="plan3">Premium</div>
+      <div class="pc-price" data-t="price-premium">From €9.99 <small data-t="plan3-per">/ mo</small></div>
+      <div class="pc-desc" style="font-size:11px;color:var(--text-3);margin-top:4px;margin-bottom:16px" data-t="plan3-subtitle">Price varies by location</div>
+      <div class="pc-desc" data-t="plan3-desc">All features of Basic plus team management and detailed analytics.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" style="font-weight:500;color:var(--text)" data-t="price-premium-includes">All features of Basic plus:</div>
+      <div class="pc-feat" data-t="pf7">Team and employee management</div>
+      <div class="pc-feat" data-t="pf8">Per-employee performance monitoring</div>
+      <div class="pc-feat" data-t="pf9">Comprehensive reports and analytics</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="section-eyebrow" data-t="cta-eyebrow">Get started</div>
+  <div class="cta-title" data-t="cta-title">Try Work Records free for 30 days</div>
+  <p class="cta-sub" data-t="cta-sub">No credit card required. Full access from day one. Cancel anytime.</p>
+  <a href="https://radna-evidencija.ei-apps.com" class="btn-primary" data-t="cta-btn">Open app — it's free</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a class="footer-logo" href="/"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+      <div class="footer-copy" data-t="footer-copy">© 2026 ei-apps. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy" class="footer-link" data-t="ft-privacy">Privacy policy</a>
+      <a href="/tos" class="footer-link" data-t="ft-terms">Terms of use</a>
+      <a href="mailto:info@ei-apps.com" class="footer-link" data-t="ft-contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const T = {
+  bs: {
+    'nav-apps':'Aplikacije','nav-pricing':'Cijene','nav-faq':'FAQ','nav-open-app':'Otvori aplikaciju',
+    'back-link':'← ei-apps.com',
+    'hero-title':'Kako <em>funkcioniše</em>',
+    'hero-sub':'Sve što vam treba za upravljanje radom, klijentima i timom — u jednoj jednostavnoj aplikaciji.',
+    'btn-open':'Otvori aplikaciju','btn-pricing':'Pogledaj cijene',
+    's1-eyebrow':'Novi unos','s1-title':'Evidentiraj naplatu ili dug za nekoliko sekundi',
+    's1-desc':'Ovdje unosiš naplatu ili dug za klijenta. Opcionalno odaberi klijenta iz liste postojećih ili kreiraj novog. Klikni + u polju "Odaberi uslugu" da dodaš novu uslugu po svom izboru i postaviš okvirno trajanje te usluge. Odaberi tip unosa (Naplaćeno ili Dug), unesi iznos i sačuvaj. Unosi se automatski sinhronizuju s oblakom.',
+    's1-b1':'Odaberi ili kreiraj klijenta iz liste','s1-b2':'Dodaj usluge po želji s trajanjem','s1-b3':'Evidentiraj naplaćene usluge ili dugove','s1-b4':'Automatska sinhronizacija s oblakom',
+    's1-ph':'Novi unos — Screenshot',
+    's2-eyebrow':'Termini','s2-title':'Zakaži i upravljaj terminima klijenata',
+    's2-desc':'Zakazuj termine za klijente. Odaberi datum u kalendaru, klikni "Zakaži termin", unesi ime klijenta, telefon, vrijeme i uslugu. Odaberi platformu za obavještavanje klijenta — WhatsApp ili Viber. Aplikacija će te podsjetiti 24 sata i 1 sat prije termina, s mogućnošću slanja podsjetnika klijentu direktno iz aplikacije.',
+    's2-b1':'Pregled kalendara s lakim odabirom datuma','s2-b2':'WhatsApp ili Viber obavijesti za klijente','s2-b3':'Podsjetnici 24h i 1h prije termina','s2-b4':'Slanje podsjetnika direktno iz aplikacije',
+    's2-ph':'Termini — Screenshot',
+    's3-eyebrow':'Pregled','s3-title':'Potpun uvid u zaradu i dugove',
+    's3-desc':'Pregled svih unosa s filterima po danu, sedmici, mjesecu i godini. Za svaki unos vidiš: datum i vrijeme usluge, ime klijenta, naziv usluge, iznos i status plaćanja. Dugovi su označeni — klikni "Naplati" da evidentiraš plaćanje duga. Ukupna zarada i preostali dugovi prikazani su na vrhu. Vlasnik radnje vidi pregled svih radnika, dok svaki radnik vidi isključivo svoje unose. Možeš pretraživati po imenu klijenta ili usluzi.',
+    's3-b1':'Filtriranje po danu, sedmici, mjesecu ili godini','s3-b2':'Pretraga po imenu klijenta ili usluzi','s3-b3':'Praćenje i naplata dugova','s3-b4':'Vlasnik vidi sve radnike, radnik samo svoje',
+    's3-ph':'Pregled — Screenshot',
+    's4-eyebrow':'Izvještaji','s4-title':'Zarada na jednom pogledu, eksport jednim klikom',
+    's4-desc':'Statistika zarade po periodu s grafičkim prikazom. Možeš exportovati sve podatke u CSV fajl ili štampati izvještaj direktno iz aplikacije.',
+    's4-b1':'Grafički prikaz zarade po danu ili mjesecu','s4-b2':'Današnja zarada uvijek vidljiva','s4-b3':'Eksport u CSV za računovodstvo','s4-b4':'Pregled spreman za štampu',
+    's4-ph':'Izvještaji — Screenshot',
+    's5-eyebrow':'Klijenti','s5-title':'Lista klijenata, uvijek pri ruci',
+    's5-desc':'Vodi listu svojih redovnih klijenata s kontakt podacima. Prilikom unosa ili zakazivanja termina, odaberi klijenta iz liste umjesto da upisuješ ime svaki put. Novog klijenta možeš kreirati direktno iz forme za unos.',
+    's5-b1':'Pohrani ime i broj telefona klijenta','s5-b2':'Brzi odabir pri unosu','s5-b3':'Brzi odabir pri zakazivanju termina','s5-b4':'Kreiraj novog klijenta u trenutku unosa',
+    's5-ph':'Klijenti — Screenshot',
+    's6-eyebrow':'Radnja i tim','s6-title':'Pozovi tim i upravljajte zajedno',
+    's6-desc':'Upravljanje radnjom — dodaj usluge koje nudite i pozovi radnike putem emaila. Upiši email adresu radnika u pozivnicu, a kada se radnik registruje na aplikaciju s tim emailom, automatski postaje dio tvoje radnje. Pretplatu plaća isključivo vlasnik radnje — radnici koriste aplikaciju besplatno u okviru vlasnikove pretplate. Vlasnik vidi pregled unosa, termine i izvještaje svih radnika u radnji, dok svaki radnik vidi isključivo svoje podatke.',
+    's6-b1':'Pozovi radnike putem emaila — bez manualnog podešavanja','s6-b2':'Radnik se automatski pridružuje pri registraciji','s6-b3':'Samo vlasnik plaća — radnici su besplatni','s6-b4':'Vlasnik vidi kompletan tim',
+    's6-ph':'Radnja i tim — Screenshot',
+    'price-label':'Cijene','price-title-app':'Work Records','price-title-suffix':'pregled planova',
+    'price-sub':'Počnite besplatno i testirajte sve funkcionalnosti bez ograničenja. Prijeđite na plaćeni plan tek kada budete sigurni da je rješenje pravo za vas.',
+    'plan1':'Probni period','trial-price':'Besplatno','plan1-per':'/ 30 dana','plan1-desc':'Puni pristup svim funkcijama bez ograničenja. Nije potrebna kreditna kartica.',
+    'pf1':'Neograničen broj unosa','pf2':'Cloud sinhronizacija','pf3':'Email podrška',
+    'popular':'Najpopularnije','plan2':'Osnovna pretplata','plan2-per':'/ mj','plan2-subtitle':'Cijena ovisi o lokaciji',
+    'plan2-desc':'Idealno za samostalne poduzetnike i manje timove.',
+    'price-basic':'Od €2.49','pf4':'Unos usluga, naplata i dugova','pf5':'Zakazivanje termina','pf6':'WhatsApp/Viber obavijesti','pf6b':'Dnevni, sedmični i mjesečni izvještaji',
+    'plan3':'Premium','plan3-per':'/ mj','plan3-subtitle':'Cijena ovisi o lokaciji',
+    'plan3-desc':'Sve iz Osnove i upravljanje timom i analize.',
+    'price-premium':'Od €9.99','price-premium-includes':'Sve funkcije osnovnog paketa plus:',
+    'pf7':'Upravljanje timom zaposlenika','pf8':'Nadzor učinka po zaposleniku','pf9':'Sveobuhvatni izvještaji i analize',
+    'cta-eyebrow':'Početak','cta-title':'Isprobaj Work Records besplatno 30 dana',
+    'cta-sub':'Nije potrebna kreditna kartica. Puni pristup od prvog dana. Otkazi u svakom trenutku.',
+    'cta-btn':'Otvori aplikaciju — besplatno',
+    'footer-copy':'© 2026 ei-apps. Sva prava zadržana.',
+    'ft-privacy':'Politika privatnosti','ft-terms':'Uslovi korištenja','ft-contact':'Kontakt'
+  },
+  en: {
+    'nav-apps':'Apps','nav-pricing':'Pricing','nav-faq':'FAQ','nav-open-app':'Open app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'How it works',
+    'hero-sub':'Everything you need to manage your work, clients and team — in one simple app.',
+    'btn-open':'Open app','btn-pricing':'View pricing',
+    's1-eyebrow':'New Entry','s1-title':'Log payments and debts in seconds',
+    's1-desc':'Here you log a payment or debt for a client. Optionally select a client from your existing list or create a new one. Click + in the Service field to add a custom service and set its approximate duration. Choose the entry type — Paid or Debt — enter the amount and save. Entries sync to the cloud automatically.',
+    's1-b1':'Select or create a client from your list','s1-b2':'Add custom services with duration','s1-b3':'Log paid services or outstanding debts','s1-b4':'Automatic cloud sync after every save',
+    's1-ph':'New Entry — Screenshot',
+    's2-eyebrow':'Appointments','s2-title':'Schedule and manage client appointments',
+    's2-desc':'Schedule appointments for your clients. Select a date on the calendar, click "Book appointment", enter the client\'s name, phone number, time and service. Choose the notification platform — WhatsApp or Viber. The app will remind you 24 hours and 1 hour before the appointment, with the option to send the reminder directly to your client.',
+    's2-b1':'Calendar view with easy date navigation','s2-b2':'WhatsApp or Viber client notifications','s2-b3':'Reminders at 24h and 1h before','s2-b4':'Send reminders directly from the app',
+    's2-ph':'Appointments — Screenshot',
+    's3-eyebrow':'Overview','s3-title':'Full picture of your earnings and debts',
+    's3-desc':'A full view of all entries with filters by day, week, month and year. For each entry you see: date and time, client name, service, amount and payment status. Debts are clearly marked — click "Collect" to record a debt payment. Total earnings and outstanding debts are shown at the top. The shop owner sees entries from all workers, while each worker sees only their own.',
+    's3-b1':'Filter by day, week, month or year','s3-b2':'Search by client name or service','s3-b3':'Track and collect outstanding debts','s3-b4':'Owners see all workers, workers see their own',
+    's3-ph':'Overview — Screenshot',
+    's4-eyebrow':'Reports','s4-title':'Earnings at a glance, export in one tap',
+    's4-desc':'Earnings statistics for any period with a visual chart. Export all data as a CSV file or print a report directly from the app.',
+    's4-b1':'Visual earnings chart by day or month','s4-b2':'Today\'s earnings always visible','s4-b3':'Export to CSV for accounting','s4-b4':'Print-ready report view',
+    's4-ph':'Reports — Screenshot',
+    's5-eyebrow':'Clients','s5-title':'Your client list, always at hand',
+    's5-desc':'Keep a list of your regular clients with their contact details. When logging a new entry or booking an appointment, simply select the client from the list instead of typing their name each time. Create a new client directly from the entry form.',
+    's5-b1':'Save client name and phone number','s5-b2':'Quick select when logging entries','s5-b3':'Quick select when booking appointments','s5-b4':'Create new clients on the fly',
+    's5-ph':'Clients — Screenshot',
+    's6-eyebrow':'Shop & Team','s6-title':'Invite your team, manage everything together',
+    's6-desc':'Manage your shop — add the services you offer and invite workers by email. Enter the worker\'s email in the invitation; when they register with that email, they automatically join your shop. Only the owner pays the subscription — workers use the app free of charge within the owner\'s plan. The owner sees entries, appointments and reports for all workers, while each worker sees only their own data.',
+    's6-b1':'Invite workers by email — no manual setup','s6-b2':'Workers join automatically on registration','s6-b3':'Only the owner pays — workers are free','s6-b4':'Full team overview for the owner',
+    's6-ph':'Shop & Team — Screenshot',
+    'price-label':'Pricing','price-title-app':'Work Records','price-title-suffix':'plan overview',
+    'price-sub':'Start free and test all features without restrictions. Upgrade to a paid plan only when you are confident it is the right solution for you.',
+    'plan1':'Trial period','trial-price':'Free','plan1-per':'/ 30 days','plan1-desc':'Full access to all features without time limits. No credit card required.',
+    'pf1':'Unlimited entries','pf2':'Cloud data sync','pf3':'Email support',
+    'popular':'Most popular','plan2':'Basic subscription','plan2-per':'/ mo','plan2-subtitle':'Price varies by location',
+    'plan2-desc':'Ideal for sole traders and small teams who need a reliable daily solution.',
+    'price-basic':'From €2.49','pf4':'Log services, payments, and debts','pf5':'Appointment scheduling','pf6':'WhatsApp/Viber notifications','pf6b':'Daily, weekly, and monthly reports',
+    'plan3':'Premium','plan3-per':'/ mo','plan3-subtitle':'Price varies by location',
+    'plan3-desc':'All features of Basic plus team management and detailed analytics.',
+    'price-premium':'From €9.99','price-premium-includes':'All features of Basic plus:',
+    'pf7':'Team and employee management','pf8':'Per-employee performance monitoring','pf9':'Comprehensive reports and analytics',
+    'cta-eyebrow':'Get started','cta-title':'Try Work Records free for 30 days',
+    'cta-sub':'No credit card required. Full access from day one. Cancel anytime.',
+    'cta-btn':'Open app — it\'s free',
+    'footer-copy':'© 2026 ei-apps. All rights reserved.',
+    'ft-privacy':'Privacy policy','ft-terms':'Terms of use','ft-contact':'Contact'
+  },
+  de: {
+    'nav-apps':'Apps','nav-pricing':'Preise','nav-faq':'FAQ','nav-open-app':'App öffnen',
+    'back-link':'← ei-apps.com',
+    'hero-title':'Wie es funktioniert',
+    'hero-sub':'Alles, was Sie brauchen, um Arbeit, Kunden und Team zu verwalten — in einer einfachen App.',
+    'btn-open':'App öffnen','btn-pricing':'Preise ansehen',
+    's1-eyebrow':'Neuer Eintrag','s1-title':'Zahlungen und Schulden in Sekunden erfassen',
+    's1-desc':'Hier erfassen Sie eine Zahlung oder Schuld für einen Kunden. Wählen Sie optional einen Kunden aus Ihrer Liste oder erstellen Sie einen neuen. Klicken Sie auf + im Servicefeld, um einen eigenen Service hinzuzufügen und die Dauer festzulegen. Wählen Sie den Typ — Bezahlt oder Schuld — geben Sie den Betrag ein und speichern Sie. Einträge werden automatisch in der Cloud synchronisiert.',
+    's1-b1':'Kunden aus der Liste wählen oder neu erstellen','s1-b2':'Eigene Services mit Dauer hinzufügen','s1-b3':'Bezahlte Services oder Schulden erfassen','s1-b4':'Automatische Cloud-Synchronisation',
+    's1-ph':'Neuer Eintrag — Screenshot',
+    's2-eyebrow':'Termine','s2-title':'Kundentermine planen und verwalten',
+    's2-desc':'Vereinbaren Sie Termine für Ihre Kunden. Wählen Sie ein Datum im Kalender, klicken Sie auf "Termin buchen", geben Sie Name, Telefon, Uhrzeit und Service ein. Wählen Sie die Benachrichtigungsplattform — WhatsApp oder Viber. Die App erinnert Sie 24 Stunden und 1 Stunde vor dem Termin, mit der Möglichkeit, die Erinnerung direkt an Ihren Kunden zu senden.',
+    's2-b1':'Kalenderansicht mit einfacher Datumsauswahl','s2-b2':'WhatsApp- oder Viber-Benachrichtigungen','s2-b3':'Erinnerungen 24h und 1h vor dem Termin','s2-b4':'Erinnerungen direkt aus der App senden',
+    's2-ph':'Termine — Screenshot',
+    's3-eyebrow':'Übersicht','s3-title':'Vollständiges Bild Ihrer Einnahmen und Schulden',
+    's3-desc':'Vollständige Übersicht aller Einträge mit Filtern nach Tag, Woche, Monat und Jahr. Für jeden Eintrag sehen Sie: Datum und Uhrzeit, Kundenname, Service, Betrag und Zahlungsstatus. Schulden sind klar markiert — klicken Sie auf "Einziehen", um eine Zahlung zu erfassen. Gesamteinnahmen und ausstehende Schulden werden oben angezeigt. Der Inhaber sieht alle Mitarbeiter, jeder Mitarbeiter nur seine eigenen Einträge.',
+    's3-b1':'Filter nach Tag, Woche, Monat oder Jahr','s3-b2':'Suche nach Kundenname oder Service','s3-b3':'Schulden verfolgen und einziehen','s3-b4':'Inhaber sieht alle, Mitarbeiter nur eigene',
+    's3-ph':'Übersicht — Screenshot',
+    's4-eyebrow':'Berichte','s4-title':'Einnahmen auf einen Blick, Export per Klick',
+    's4-desc':'Einnahmenstatistik für beliebige Zeiträume mit visuellem Diagramm. Alle Daten als CSV exportieren oder Bericht direkt aus der App drucken.',
+    's4-b1':'Visuelles Einnahmendiagramm','s4-b2':'Heutige Einnahmen immer sichtbar','s4-b3':'CSV-Export für die Buchhaltung','s4-b4':'Druckfertiger Bericht',
+    's4-ph':'Berichte — Screenshot',
+    's5-eyebrow':'Kunden','s5-title':'Ihre Kundenliste, immer griffbereit',
+    's5-desc':'Führen Sie eine Liste Ihrer Stammkunden mit Kontaktdaten. Beim Erfassen eines Eintrags oder Buchens eines Termins wählen Sie den Kunden einfach aus der Liste. Neuen Kunden direkt aus dem Eingabeformular erstellen.',
+    's5-b1':'Name und Telefon des Kunden speichern','s5-b2':'Schnellauswahl bei Einträgen','s5-b3':'Schnellauswahl bei Terminbuchung','s5-b4':'Neuen Kunden direkt beim Eintrag erstellen',
+    's5-ph':'Kunden — Screenshot',
+    's6-eyebrow':'Geschäft & Team','s6-title':'Team einladen und gemeinsam verwalten',
+    's6-desc':'Verwalten Sie Ihr Geschäft — fügen Sie Services hinzu und laden Sie Mitarbeiter per E-Mail ein. Wenn sich der Mitarbeiter mit dieser E-Mail registriert, tritt er automatisch Ihrem Geschäft bei. Nur der Inhaber zahlt das Abonnement — Mitarbeiter nutzen die App kostenlos. Der Inhaber sieht alle Einträge, Termine und Berichte, jeder Mitarbeiter nur seine eigenen Daten.',
+    's6-b1':'Mitarbeiter per E-Mail einladen','s6-b2':'Automatischer Beitritt bei Registrierung','s6-b3':'Nur der Inhaber zahlt — Mitarbeiter kostenlos','s6-b4':'Vollständige Teamübersicht für den Inhaber',
+    's6-ph':'Geschäft & Team — Screenshot',
+    'price-label':'Preise','price-title-app':'Work Records','price-title-suffix':'Planübersicht',
+    'price-sub':'Starten Sie kostenlos und testen Sie alle Funktionen. Upgraden Sie auf einen bezahlten Plan erst, wenn Sie sicher sind.',
+    'plan1':'Testphase','trial-price':'Kostenlos','plan1-per':'/ 30 Tage','plan1-desc':'Voller Zugang zu allen Funktionen. Keine Kreditkarte erforderlich.',
+    'pf1':'Unbegrenzte Einträge','pf2':'Cloud-Synchronisation','pf3':'E-Mail-Support',
+    'popular':'Beliebteste','plan2':'Basisabonnement','plan2-per':'/ Mo.','plan2-subtitle':'Preis je nach Standort',
+    'plan2-desc':'Ideal für Einzelunternehmer und kleine Teams.',
+    'price-basic':'Ab €2.49','pf4':'Services, Zahlungen und Schulden','pf5':'Terminplanung','pf6':'WhatsApp/Viber-Benachrichtigungen','pf6b':'Tägliche, wöchentliche und monatliche Berichte',
+    'plan3':'Premium','plan3-per':'/ Mo.','plan3-subtitle':'Preis je nach Standort',
+    'plan3-desc':'Alles aus Basis plus Teamverwaltung und Analysen.',
+    'price-premium':'Ab €9.99','price-premium-includes':'Alle Basisfunktionen plus:',
+    'pf7':'Team- und Mitarbeiterverwaltung','pf8':'Leistungsüberwachung pro Mitarbeiter','pf9':'Umfassende Berichte und Analysen',
+    'cta-eyebrow':'Loslegen','cta-title':'Work Records 30 Tage kostenlos testen',
+    'cta-sub':'Keine Kreditkarte erforderlich. Voller Zugang ab Tag eins. Jederzeit kündbar.',
+    'cta-btn':'App öffnen — kostenlos',
+    'footer-copy':'© 2026 ei-apps. Alle Rechte vorbehalten.',
+    'ft-privacy':'Datenschutzrichtlinie','ft-terms':'Nutzungsbedingungen','ft-contact':'Kontakt'
+  },
+  fr: {
+    'nav-apps':'Applications','nav-pricing':'Tarifs','nav-faq':'FAQ','nav-open-app':'Ouvrir l\'app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'Comment ça fonctionne',
+    'hero-sub':'Tout ce dont vous avez besoin pour gérer votre travail, vos clients et votre équipe — dans une application simple.',
+    'btn-open':'Ouvrir l\'app','btn-pricing':'Voir les tarifs',
+    's1-eyebrow':'Nouvelle entrée','s1-title':'Enregistrez paiements et dettes en quelques secondes',
+    's1-desc':'Ici vous enregistrez un paiement ou une dette pour un client. Sélectionnez optionnellement un client de votre liste ou créez-en un nouveau. Cliquez sur + dans le champ Service pour ajouter un service personnalisé et définir sa durée. Choisissez le type — Payé ou Dette — saisissez le montant et enregistrez. Les entrées se synchronisent automatiquement.',
+    's1-b1':'Sélectionner ou créer un client','s1-b2':'Ajouter des services avec durée','s1-b3':'Enregistrer services payés ou dettes','s1-b4':'Synchronisation cloud automatique',
+    's1-ph':'Nouvelle entrée — Capture',
+    's2-eyebrow':'Rendez-vous','s2-title':'Planifiez et gérez les rendez-vous clients',
+    's2-desc':'Planifiez des rendez-vous pour vos clients. Sélectionnez une date, cliquez sur "Prendre rendez-vous", saisissez nom, téléphone, heure et service. Choisissez la plateforme — WhatsApp ou Viber. L\'app vous rappellera 24h et 1h avant, avec la possibilité d\'envoyer le rappel directement à votre client.',
+    's2-b1':'Vue calendrier avec navigation facile','s2-b2':'Notifications client WhatsApp ou Viber','s2-b3':'Rappels 24h et 1h avant','s2-b4':'Envoi de rappels depuis l\'app',
+    's2-ph':'Rendez-vous — Capture',
+    's3-eyebrow':'Aperçu','s3-title':'Vue complète de vos revenus et dettes',
+    's3-desc':'Vue complète de toutes les entrées avec filtres par jour, semaine, mois et année. Pour chaque entrée : date et heure, nom du client, service, montant et statut de paiement. Les dettes sont marquées — cliquez sur "Encaisser" pour enregistrer un paiement. Revenus totaux et dettes affichés en haut. Le propriétaire voit tous les employés, chaque employé voit uniquement les siens.',
+    's3-b1':'Filtres par jour, semaine, mois ou année','s3-b2':'Recherche par client ou service','s3-b3':'Suivi et encaissement des dettes','s3-b4':'Le propriétaire voit tout, les employés le leur',
+    's3-ph':'Aperçu — Capture',
+    's4-eyebrow':'Rapports','s4-title':'Revenus en un coup d\'œil, export en un tap',
+    's4-desc':'Statistiques de revenus pour toute période avec graphique visuel. Exportez toutes les données en CSV ou imprimez un rapport depuis l\'app.',
+    's4-b1':'Graphique de revenus visuel','s4-b2':'Revenus du jour toujours visibles','s4-b3':'Export CSV pour la comptabilité','s4-b4':'Vue rapport prête à imprimer',
+    's4-ph':'Rapports — Capture',
+    's5-eyebrow':'Clients','s5-title':'Votre liste clients, toujours à portée',
+    's5-desc':'Gardez une liste de vos clients habituels avec leurs coordonnées. Lors d\'une entrée ou d\'un rendez-vous, sélectionnez simplement le client dans la liste. Créez un nouveau client directement depuis le formulaire.',
+    's5-b1':'Sauvegarder nom et téléphone du client','s5-b2':'Sélection rapide lors des entrées','s5-b3':'Sélection rapide lors des rendez-vous','s5-b4':'Créer un nouveau client à la volée',
+    's5-ph':'Clients — Capture',
+    's6-eyebrow':'Boutique & Équipe','s6-title':'Invitez votre équipe, gérez ensemble',
+    's6-desc':'Gérez votre boutique — ajoutez les services proposés et invitez des employés par email. Quand l\'employé s\'inscrit avec cet email, il rejoint automatiquement votre boutique. Seul le propriétaire paie l\'abonnement — les employés utilisent l\'app gratuitement. Le propriétaire voit tout, chaque employé voit uniquement ses propres données.',
+    's6-b1':'Inviter les employés par email','s6-b2':'Adhésion automatique à l\'inscription','s6-b3':'Seul le propriétaire paie — employés gratuits','s6-b4':'Vue complète de l\'équipe pour le propriétaire',
+    's6-ph':'Boutique & Équipe — Capture',
+    'price-label':'Tarifs','price-title-app':'Work Records','price-title-suffix':'aperçu des plans',
+    'price-sub':'Commencez gratuitement et testez toutes les fonctionnalités. Passez à un plan payant uniquement quand vous êtes convaincu.',
+    'plan1':'Période d\'essai','trial-price':'Gratuit','plan1-per':'/ 30 jours','plan1-desc':'Accès complet à toutes les fonctions. Aucune carte bancaire requise.',
+    'pf1':'Entrées illimitées','pf2':'Synchronisation cloud','pf3':'Support par email',
+    'popular':'Plus populaire','plan2':'Abonnement de base','plan2-per':'/ mois','plan2-subtitle':'Prix selon localisation',
+    'plan2-desc':'Idéal pour indépendants et petites équipes.',
+    'price-basic':'À partir de €2.49','pf4':'Services, paiements et dettes','pf5':'Planification de rendez-vous','pf6':'Notifications WhatsApp/Viber','pf6b':'Rapports quotidiens, hebdomadaires et mensuels',
+    'plan3':'Premium','plan3-per':'/ mois','plan3-subtitle':'Prix selon localisation',
+    'plan3-desc':'Tout ce qui est inclus dans Base plus gestion d\'équipe.',
+    'price-premium':'À partir de €9.99','price-premium-includes':'Toutes les fonctions de Base plus :',
+    'pf7':'Gestion équipe et employés','pf8':'Suivi performance par employé','pf9':'Rapports et analyses complets',
+    'cta-eyebrow':'Démarrer','cta-title':'Essayez Work Records gratuitement 30 jours',
+    'cta-sub':'Aucune carte bancaire requise. Accès complet dès le premier jour. Résiliable à tout moment.',
+    'cta-btn':'Ouvrir l\'app — c\'est gratuit',
+    'footer-copy':'© 2026 ei-apps. Tous droits réservés.',
+    'ft-privacy':'Politique de confidentialité','ft-terms':'Conditions d\'utilisation','ft-contact':'Contact'
+  },
+  es: {
+    'nav-apps':'Aplicaciones','nav-pricing':'Precios','nav-faq':'FAQ','nav-open-app':'Abrir app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'Cómo funciona',
+    'hero-sub':'Todo lo que necesita para gestionar su trabajo, clientes y equipo — en una sola app.',
+    'btn-open':'Abrir app','btn-pricing':'Ver precios',
+    's1-eyebrow':'Nueva entrada','s1-title':'Registre pagos y deudas en segundos',
+    's1-desc':'Aquí registra un pago o deuda para un cliente. Seleccione opcionalmente un cliente de su lista o cree uno nuevo. Haga clic en + en el campo Servicio para añadir un servicio personalizado y su duración. Elija el tipo — Pagado o Deuda — introduzca el importe y guarde. Las entradas se sincronizan automáticamente.',
+    's1-b1':'Seleccionar o crear un cliente de la lista','s1-b2':'Añadir servicios con duración','s1-b3':'Registrar servicios pagados o deudas','s1-b4':'Sincronización automática en la nube',
+    's1-ph':'Nueva entrada — Captura',
+    's2-eyebrow':'Citas','s2-title':'Programe y gestione citas de clientes',
+    's2-desc':'Programe citas para sus clientes. Seleccione una fecha, haga clic en "Reservar cita", introduzca nombre, teléfono, hora y servicio. Elija la plataforma — WhatsApp o Viber. La app le recordará 24h y 1h antes, con opción de enviar el recordatorio directamente al cliente.',
+    's2-b1':'Vista de calendario con navegación fácil','s2-b2':'Notificaciones WhatsApp o Viber','s2-b3':'Recordatorios 24h y 1h antes','s2-b4':'Envío de recordatorios desde la app',
+    's2-ph':'Citas — Captura',
+    's3-eyebrow':'Resumen','s3-title':'Visión completa de sus ingresos y deudas',
+    's3-desc':'Vista completa de todas las entradas con filtros por día, semana, mes y año. Para cada entrada: fecha y hora, nombre del cliente, servicio, importe y estado de pago. Las deudas están marcadas — haga clic en "Cobrar" para registrar un pago. Ingresos totales y deudas pendientes en la parte superior. El propietario ve todos los trabajadores, cada trabajador solo los suyos.',
+    's3-b1':'Filtros por día, semana, mes o año','s3-b2':'Búsqueda por cliente o servicio','s3-b3':'Seguimiento y cobro de deudas','s3-b4':'Propietario ve todo, trabajadores lo suyo',
+    's3-ph':'Resumen — Captura',
+    's4-eyebrow':'Informes','s4-title':'Ingresos de un vistazo, exportar en un toque',
+    's4-desc':'Estadísticas de ingresos por período con gráfico visual. Exporte todos los datos como CSV o imprima un informe directamente desde la app.',
+    's4-b1':'Gráfico visual de ingresos','s4-b2':'Ingresos del día siempre visibles','s4-b3':'Exportar a CSV para contabilidad','s4-b4':'Vista de informe lista para imprimir',
+    's4-ph':'Informes — Captura',
+    's5-eyebrow':'Clientes','s5-title':'Su lista de clientes, siempre a mano',
+    's5-desc':'Mantenga una lista de sus clientes habituales con datos de contacto. Al registrar una entrada o reservar una cita, seleccione el cliente de la lista. Cree un nuevo cliente directamente desde el formulario.',
+    's5-b1':'Guardar nombre y teléfono del cliente','s5-b2':'Selección rápida al registrar entradas','s5-b3':'Selección rápida al reservar citas','s5-b4':'Crear nuevos clientes al instante',
+    's5-ph':'Clientes — Captura',
+    's6-eyebrow':'Negocio & Equipo','s6-title':'Invite a su equipo, gestionen juntos',
+    's6-desc':'Gestione su negocio — añada servicios e invite trabajadores por email. Cuando el trabajador se registre con ese email, se unirá automáticamente a su negocio. Solo el propietario paga la suscripción — los trabajadores usan la app gratis. El propietario ve todo, cada trabajador solo sus propios datos.',
+    's6-b1':'Invitar trabajadores por email','s6-b2':'Adhesión automática al registrarse','s6-b3':'Solo el propietario paga — trabajadores gratis','s6-b4':'Vista completa del equipo para el propietario',
+    's6-ph':'Negocio & Equipo — Captura',
+    'price-label':'Precios','price-title-app':'Work Records','price-title-suffix':'resumen de planes',
+    'price-sub':'Empiece gratis y pruebe todas las funcionalidades. Actualice a un plan de pago solo cuando esté seguro.',
+    'plan1':'Período de prueba','trial-price':'Gratis','plan1-per':'/ 30 días','plan1-desc':'Acceso completo a todas las funciones. No se requiere tarjeta de crédito.',
+    'pf1':'Entradas ilimitadas','pf2':'Sincronización en la nube','pf3':'Soporte por email',
+    'popular':'Más popular','plan2':'Suscripción básica','plan2-per':'/ mes','plan2-subtitle':'Precio según ubicación',
+    'plan2-desc':'Ideal para autónomos y pequeños equipos.',
+    'price-basic':'Desde €2.49','pf4':'Servicios, pagos y deudas','pf5':'Gestión de citas','pf6':'Notificaciones WhatsApp/Viber','pf6b':'Informes diarios, semanales y mensuales',
+    'plan3':'Premium','plan3-per':'/ mes','plan3-subtitle':'Precio según ubicación',
+    'plan3-desc':'Todo lo de Básico más gestión de equipo y análisis.',
+    'price-premium':'Desde €9.99','price-premium-includes':'Todas las funciones de Básico más:',
+    'pf7':'Gestión de equipo y empleados','pf8':'Seguimiento de rendimiento por empleado','pf9':'Informes y análisis completos',
+    'cta-eyebrow':'Empezar','cta-title':'Pruebe Work Records gratis 30 días',
+    'cta-sub':'Sin tarjeta de crédito. Acceso completo desde el primer día. Cancele cuando quiera.',
+    'cta-btn':'Abrir app — es gratis',
+    'footer-copy':'© 2026 ei-apps. Todos los derechos reservados.',
+    'ft-privacy':'Política de privacidad','ft-terms':'Términos de uso','ft-contact':'Contacto'
+  },
+  it: {
+    'nav-apps':'Applicazioni','nav-pricing':'Prezzi','nav-faq':'FAQ','nav-open-app':'Apri app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'Come funziona',
+    'hero-sub':'Tutto il necessario per gestire lavoro, clienti e team — in un\'unica app semplice.',
+    'btn-open':'Apri app','btn-pricing':'Vedi prezzi',
+    's1-eyebrow':'Nuova voce','s1-title':'Registra pagamenti e debiti in pochi secondi',
+    's1-desc':'Qui si registra un pagamento o un debito per un cliente. Selezionate facoltativamente un cliente dalla lista o createne uno nuovo. Cliccate su + nel campo Servizio per aggiungere un servizio personalizzato e impostarne la durata. Scegliete il tipo — Pagato o Debito — inserite l\'importo e salvate. Le voci si sincronizzano automaticamente.',
+    's1-b1':'Selezionare o creare un cliente dalla lista','s1-b2':'Aggiungere servizi con durata','s1-b3':'Registrare servizi pagati o debiti','s1-b4':'Sincronizzazione cloud automatica',
+    's1-ph':'Nuova voce — Screenshot',
+    's2-eyebrow':'Appuntamenti','s2-title':'Pianifica e gestisci gli appuntamenti',
+    's2-desc':'Programmate appuntamenti per i vostri clienti. Selezionate una data, cliccate su "Prenota appuntamento", inserite nome, telefono, ora e servizio. Scegliete la piattaforma — WhatsApp o Viber. L\'app vi ricorderà 24h e 1h prima, con la possibilità di inviare il promemoria direttamente al cliente.',
+    's2-b1':'Vista calendario con navigazione facile','s2-b2':'Notifiche WhatsApp o Viber','s2-b3':'Promemoria 24h e 1h prima','s2-b4':'Invio promemoria dall\'app',
+    's2-ph':'Appuntamenti — Screenshot',
+    's3-eyebrow':'Panoramica','s3-title':'Quadro completo di entrate e debiti',
+    's3-desc':'Vista completa di tutte le voci con filtri per giorno, settimana, mese e anno. Per ogni voce: data e ora, nome cliente, servizio, importo e stato pagamento. I debiti sono marcati — cliccate su "Incassa" per registrare un pagamento. Entrate totali e debiti in sospeso mostrati in cima. Il proprietario vede tutti i lavoratori, ogni lavoratore vede solo le proprie.',
+    's3-b1':'Filtri per giorno, settimana, mese o anno','s3-b2':'Ricerca per cliente o servizio','s3-b3':'Tracciamento e incasso debiti','s3-b4':'Proprietario vede tutti, lavoratori solo propri',
+    's3-ph':'Panoramica — Screenshot',
+    's4-eyebrow':'Report','s4-title':'Entrate a colpo d\'occhio, esporta in un tap',
+    's4-desc':'Statistiche entrate per qualsiasi periodo con grafico visivo. Esportate tutti i dati come CSV o stampate un report direttamente dall\'app.',
+    's4-b1':'Grafico visivo delle entrate','s4-b2':'Entrate del giorno sempre visibili','s4-b3':'Esporta CSV per la contabilità','s4-b4':'Vista report pronta per la stampa',
+    's4-ph':'Report — Screenshot',
+    's5-eyebrow':'Clienti','s5-title':'La vostra lista clienti, sempre a portata',
+    's5-desc':'Tenete una lista dei vostri clienti abituali con i dati di contatto. Quando si registra una voce o si prenota un appuntamento, selezionate semplicemente il cliente dalla lista. Create un nuovo cliente direttamente dal modulo.',
+    's5-b1':'Salvare nome e telefono del cliente','s5-b2':'Selezione rapida per le voci','s5-b3':'Selezione rapida per gli appuntamenti','s5-b4':'Creare nuovi clienti al volo',
+    's5-ph':'Clienti — Screenshot',
+    's6-eyebrow':'Negozio & Team','s6-title':'Invita il team, gestite tutto insieme',
+    's6-desc':'Gestite il vostro negozio — aggiungete i servizi e invitate lavoratori per email. Quando il lavoratore si registra con quell\'email, entra automaticamente nel negozio. Solo il proprietario paga l\'abbonamento — i lavoratori usano l\'app gratuitamente. Il proprietario vede tutto, ogni lavoratore solo i propri dati.',
+    's6-b1':'Invitare lavoratori per email','s6-b2':'Adesione automatica alla registrazione','s6-b3':'Solo il proprietario paga — lavoratori gratuiti','s6-b4':'Vista completa del team per il proprietario',
+    's6-ph':'Negozio & Team — Screenshot',
+    'price-label':'Prezzi','price-title-app':'Work Records','price-title-suffix':'panoramica piani',
+    'price-sub':'Inizia gratuitamente e testa tutte le funzionalità. Passa a un piano a pagamento solo quando sei sicuro.',
+    'plan1':'Periodo di prova','trial-price':'Gratuito','plan1-per':'/ 30 giorni','plan1-desc':'Accesso completo a tutte le funzioni. Nessuna carta di credito richiesta.',
+    'pf1':'Voci illimitate','pf2':'Sincronizzazione cloud','pf3':'Supporto email',
+    'popular':'Più popolare','plan2':'Abbonamento base','plan2-per':'/ mese','plan2-subtitle':'Prezzo in base alla posizione',
+    'plan2-desc':'Ideale per liberi professionisti e piccoli team.',
+    'price-basic':'Da €2.49','pf4':'Servizi, pagamenti e debiti','pf5':'Gestione appuntamenti','pf6':'Notifiche WhatsApp/Viber','pf6b':'Report giornalieri, settimanali e mensili',
+    'plan3':'Premium','plan3-per':'/ mese','plan3-subtitle':'Prezzo in base alla posizione',
+    'plan3-desc':'Tutto di Base più gestione team e analisi.',
+    'price-premium':'Da €9.99','price-premium-includes':'Tutte le funzioni di Base più:',
+    'pf7':'Gestione team e dipendenti','pf8':'Monitoraggio performance per dipendente','pf9':'Report e analisi completi',
+    'cta-eyebrow':'Inizia','cta-title':'Prova Work Records gratis per 30 giorni',
+    'cta-sub':'Nessuna carta di credito. Accesso completo dal primo giorno. Cancella quando vuoi.',
+    'cta-btn':'Apri app — è gratis',
+    'footer-copy':'© 2026 ei-apps. Tutti i diritti riservati.',
+    'ft-privacy':'Informativa sulla privacy','ft-terms':'Termini di utilizzo','ft-contact':'Contatto'
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const d = T[lang];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (d[key] !== undefined) el.textContent = d[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+function setLang(lang, flag, name, el) {
+  document.getElementById('lang-flag').textContent = flag;
+  document.getElementById('lang-name').textContent = name;
+  document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lang-dropdown').classList.remove('open');
+  applyLang(lang);
+}
+
+function toggleLang(e) {
+  e.stopPropagation();
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+
+document.addEventListener('click', () => {
+  document.getElementById('lang-dropdown').classList.remove('open');
+});
+
+applyLang('en');
+</script>
+</body>
+</html>
