@@ -274,10 +274,19 @@ body {
   padding: 32px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 .app-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue-mid); }
-.app-card-coming { opacity: 0.55; border-style: dashed; }
+.app-card-coming { opacity: 0.55; border-style: dashed; justify-content: flex-start; }
 .app-card-coming:hover { box-shadow: var(--shadow-sm); border-color: var(--border); }
+
+.app-promo-img {
+  width: calc(100% + 64px);
+  margin: -32px -32px 24px -32px;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  display: block;
+}
 
 .app-icon {
   width: 52px;
@@ -782,9 +791,7 @@ body {
     <div class="apps-grid">
       <!-- App 1 -->
       <div class="app-card">
-        <div class="app-icon">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
-        </div>
+        <img src="wr-promo.png" alt="Work Records Promo" class="app-promo-img">
         <div class="app-name" data-t="app1-name">Work Records</div>
         <div class="app-desc" data-t="er-desc">A comprehensive platform for easy service management, logging payments and debts. Enables an overview of key information, appointment scheduling, and employee coordination — accessible from any device, at any time.</div>
         <div class="app-pills">
