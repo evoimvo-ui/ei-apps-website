@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShiftForge — Schedule Management System | ei-apps</title>
+<link rel="icon" type="image/png" href="/Logowebapp.png">
+<link rel="apple-touch-icon" href="/Logowebapp.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue: #4F7EF7;
+  --blue-dark: #3A6BEA;
+  --blue-light: #EEF4FF;
+  --blue-mid: #C3D8FF;
+  --text: #111827;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --bg: #ffffff;
+  --bg-2: #F9FAFB;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --green-bg: #ECFDF5;
+  --green-text: #065F46;
+  --green-border: #A7F3D0;
+  --amber-bg: #FFFBEB;
+  --amber-text: #92400E;
+  --amber-border: #FCD34D;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 64px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand-logo { height: 1em; width: auto; display: block; flex-shrink: 0; }
+.nav-logo em { font-style: normal; color: var(--blue); }
+.nav-logo span { display: flex; align-items: center; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.lang-wrapper { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-2);
+  transition: border-color 0.15s;
+}
+.lang-btn:hover { border-color: var(--blue); color: var(--text); }
+.lang-dropdown {
+  position: absolute; right: 0; top: calc(100% + 6px);
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-md); min-width: 172px;
+  display: none; z-index: 300;
+  box-shadow: var(--shadow-md); overflow: hidden;
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; font-size: 14px; cursor: pointer;
+  color: var(--text); transition: background 0.1s;
+}
+.lang-option:hover { background: var(--bg-2); }
+.lang-option.active { color: var(--blue); font-weight: 500; }
+
+/* ─── BACK LINK ─── */
+.back-bar {
+  padding: 14px 60px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-2);
+}
+.back-link {
+  font-size: 14px;
+  color: var(--text-2);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--blue); }
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center;
+  padding: 72px 60px 64px;
+  background: linear-gradient(160deg, #F0F5FF 0%, #F9FAFB 60%, #fff 100%);
+  border-bottom: 1px solid var(--border-light);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--blue-light);
+  border: 1px solid var(--blue-mid);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--blue);
+  margin-bottom: 24px;
+  letter-spacing: 0.01em;
+}
+.hero-title {
+  font-size: clamp(32px);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.hero-title em { font-style: normal; color: var(--blue); }
+.hero-tagline {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text-2);
+  font-weight: 400;
+  margin-bottom: 32px;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 13px 28px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.btn-secondary {
+  padding: 13px 28px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.1s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--text-2); background: var(--bg-2); }
+
+/* ─── FEATURE SECTIONS ─── */
+.features-wrapper { padding: 0 60px; }
+
+.feature-section {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 64px;
+  align-items: start;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.feature-section:last-child { border-bottom: none; }
+
+.feature-section.reverse {
+  grid-template-columns: 1fr 280px;
+}
+.feature-section.reverse .feature-visual { order: 2; }
+.feature-section.reverse .feature-content { order: 1; }
+
+.feature-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+.feature-title {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.feature-desc {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+.feature-bullets {
+  list-style: none;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.feature-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.feature-bullets li::before {
+  content: "✓";
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── SCREENSHOT PLACEHOLDER ─── */
+.screenshot-placeholder {
+  width: 100%;
+  aspect-ratio: 9/16;
+  background: var(--bg-2);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+.ph-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ph-icon { font-size: 36px; }
+.ph-label { font-size: 14px; font-weight: 500; color: var(--text-2); }
+.ph-file { font-size: 11px; color: var(--text-3); font-family: monospace; background: var(--border-light); padding: 3px 8px; border-radius: 4px; }
+.screenshot-img { width: 100%; border-radius: var(--radius-xl); box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); display: block; }
+
+/* ─── SECTION GENERIC ─── */
+.section { padding: 80px 60px; }
+.section-full { padding: 80px 60px; background: var(--bg-2); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+.section-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+.section-title { font-size: clamp(24px, 4vw, 36px); font-weight: 600; letter-spacing: -0.5px; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
+.section-sub { font-size: 16px; color: var(--text-2); margin-bottom: 48px; line-height: 1.65; max-width: 560px; }
+
+/* ─── PRICING ─── */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.pc { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px; }
+.pc.featured { border: 2px solid var(--blue); position: relative; }
+.pc-badge { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 100px; margin-bottom: 16px; letter-spacing: 0.04em; text-transform: uppercase; }
+.pc-name { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.pc-price { font-size: 32px; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -1px; line-height: 1; }
+.pc-price small { font-size: 14px; font-weight: 400; color: var(--text-2); letter-spacing: 0; }
+.pc-desc { font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
+.pc-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 16px; }
+.pc-feat { font-size: 14px; color: var(--text-2); padding: 5px 0; display: flex; gap: 10px; align-items: flex-start; }
+.pc-feat::before { content: "✓"; color: var(--blue); font-weight: 600; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+/* ─── CTA ─── */
+.cta-section {
+  padding: 80px 60px; text-align: center;
+  background: linear-gradient(135deg, var(--blue-light) 0%, #fff 100%);
+  border-top: 1px solid var(--border-light);
+}
+.cta-title { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.5px; color: var(--text); margin-bottom: 14px; }
+.cta-sub { font-size: 16px; color: var(--text-2); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+/* ─── FOOTER ─── */
+.footer { border-top: 1px solid var(--border); padding: 40px; background: var(--bg-2); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-size: 17px; font-weight: 600; color: var(--text-2); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.footer-logo em { font-style: normal; color: var(--blue); }
+.footer-copy { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-link { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: var(--text); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; height: 56px; }
+  .nav-links { display: none; }
+  .back-bar { padding: 12px 20px; }
+  .hero { padding: 48px 20px 44px; }
+  .features-wrapper { padding: 0 20px; }
+  .feature-section,
+  .feature-section.reverse { grid-template-columns: 1fr; gap: 32px; padding: 48px 0; }
+  .feature-content { order: 1; }
+  .feature-visual { order: 2; }
+  .screenshot-placeholder { max-width: 260px; margin: 0 auto; }
+  .section { padding: 56px 20px; }
+  .section-full { padding: 56px 20px; }
+  .cta-section { padding: 56px 20px; }
+  .footer { padding: 32px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .nav { padding: 0 16px; }
+  .hero { padding: 40px 16px 36px; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .hero-btns a { width: 100%; max-width: 280px; text-align: center; }
+  .features-wrapper { padding: 0 16px; }
+  .section { padding: 48px 16px; }
+  .section-full { padding: 48px 16px; }
+  .cta-section { padding: 48px 16px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer { padding: 28px 16px; }
+  .footer-links { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="/"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+  <div class="nav-links">
+    <a href="/#apps" data-t="nav-apps">Apps</a>
+    <a href="#pricing" data-t="nav-pricing">Pricing</a>
+    <a href="/#faq" data-t="nav-faq">FAQ</a>
+    <a href="#" data-t="nav-open-app">Open app</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-wrapper">
+      <button class="lang-btn" onclick="toggleLang(event)">
+        <span id="lang-flag">🇬🇧</span>
+        <span id="lang-name">English</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.5l3 3 3-3"></path></svg>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <div class="lang-option" onclick="setLang('bs','🇧🇦','Bosanski',this)">🇧🇦 Bosanski</div>
+        <div class="lang-option active" onclick="setLang('en','🇬🇧','English',this)">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('de','🇩🇪','Deutsch',this)">🇩🇪 Deutsch</div>
+        <div class="lang-option" onclick="setLang('fr','🇫🇷','Français',this)">🇫🇷 Français</div>
+        <div class="lang-option" onclick="setLang('es','🇪🇸','Español',this)">🇪🇸 Español</div>
+        <div class="lang-option" onclick="setLang('it','🇮🇹','Italiano',this)">🇮🇹 Italiano</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- BACK BAR -->
+<div class="back-bar">
+  <a href="/" class="back-link" data-t="back-link">← ei-apps.com</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#4F7EF7" stroke-width="2"><rect x="2" y="2" width="12" height="12" rx="2"></rect><path d="M6 8h4M6 5h4M6 11h2"></path></svg>
+    <span>ShiftForge</span>
+  </div>
+  <h1 class="hero-title" data-t="hero-title">ShiftForge</h1>
+  <p class="hero-tagline" data-t="hero-sub">Schedule Management System</p>
+  <div class="hero-btns">
+    <a href="#" class="btn-primary" data-t="btn-open">Open app</a>
+    <a href="#pricing" class="btn-secondary" data-t="btn-pricing">View pricing</a>
+  </div>
+</section>
+
+<!-- FEATURE SECTIONS -->
+<div class="features-wrapper">
+  <!-- 1. Schedule -->
+  <div class="feature-section">
+    <div class="feature-visual">
+      <div class="screenshot-placeholder">
+        <div class="ph-inner">
+          <div class="ph-icon">📅</div>
+          <div class="ph-label" data-t="s1-ph">Screenshot coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s1-eyebrow">Schedule</div>
+      <div class="feature-title" data-t="s1-title">Automatic schedule generation</div>
+      <p class="feature-desc" data-t="s1-desc">Automatic schedule generation based on worker availability, absences, holidays and shift rules. Manual adjustments with conflict detection.</p>
+      <ul class="feature-bullets">
+        <li data-t="s1-b1">Auto-generate weekly schedules</li>
+        <li data-t="s1-b2">Conflict detection for manual edits</li>
+        <li data-t="s1-b3">Holiday integration</li>
+      </ul>
+    </div>
+  </div>
+  <!-- 2. Workers -->
+  <div class="feature-section reverse">
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s2-eyebrow">Workers</div>
+      <div class="feature-title" data-t="s2-title">Worker management</div>
+      <p class="feature-desc" data-t="s2-desc">Add workers, assign categories and groups, set weekly hour limits and weekend rotation cycles.</p>
+      <ul class="feature-bullets">
+        <li data-t="s2-b1">Worker categories and groups</li>
+        <li data-t="s2-b2">Weekly hour limits</li>
+        <li data-t="s2-b3">Weekend rotation rules</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <div class="screenshot-placeholder">
+        <div class="ph-inner">
+          <div class="ph-icon">👥</div>
+          <div class="ph-label" data-t="s2-ph">Screenshot coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 3. Absences -->
+  <div class="feature-section">
+    <div class="feature-visual">
+      <div class="screenshot-placeholder">
+        <div class="ph-inner">
+          <div class="ph-icon">🚫</div>
+          <div class="ph-label" data-t="s3-ph">Screenshot coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s3-eyebrow">Absences</div>
+      <div class="feature-title" data-t="s3-title">Absence management</div>
+      <p class="feature-desc" data-t="s3-desc">Workers submit absence requests. Admin approves or rejects — approved absences automatically remove the worker from shifts.</p>
+      <ul class="feature-bullets">
+        <li data-t="s3-b1">Worker absence requests</li>
+        <li data-t="s3-b2">Approve/reject workflow</li>
+        <li data-t="s3-b3">Auto-sync with schedule</li>
+      </ul>
+    </div>
+  </div>
+  <!-- 4. Shift Types -->
+  <div class="feature-section reverse">
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s4-eyebrow">Shift Types</div>
+      <div class="feature-title" data-t="s4-title">Custom shift types</div>
+      <p class="feature-desc" data-t="s4-desc">Define custom shift types with start/end times, colors and icons. Support for split shifts and break policies.</p>
+      <ul class="feature-bullets">
+        <li data-t="s4-b1">Custom shifts with colors</li>
+        <li data-t="s4-b2">Split shift support</li>
+        <li data-t="s4-b3">Break policies</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <div class="screenshot-placeholder">
+        <div class="ph-inner">
+          <div class="ph-icon">⏰</div>
+          <div class="ph-label" data-t="s4-ph">Screenshot coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 5. Dashboard -->
+  <div class="feature-section">
+    <div class="feature-visual">
+      <div class="screenshot-placeholder">
+        <div class="ph-inner">
+          <div class="ph-icon">📊</div>
+          <div class="ph-label" data-t="s5-ph">Screenshot coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s5-eyebrow">Dashboard</div>
+      <div class="feature-title" data-t="s5-title">Real-time dashboard</div>
+      <p class="feature-desc" data-t="s5-desc">Overview of active workers, absences, weekly hours, overtime warnings, swap requests and audit log.</p>
+      <ul class="feature-bullets">
+        <li data-t="s5-b1">Overtime warnings</li>
+        <li data-t="s5-b2">Swap request management</li>
+        <li data-t="s5-b3">Audit log</li>
+      </ul>
+    </div>
+  </div>
+  <!-- 6. Export -->
+  <div class="feature-section reverse">
+    <div class="feature-content">
+      <div class="feature-eyebrow" data-t="s6-eyebrow">Export</div>
+      <div class="feature-title" data-t="s6-title">Export & reports</div>
+      <p class="feature-desc" data-t="s6-desc">Export schedules to CSV or detailed PDF with hours and absences per worker.</p>
+      <ul class="feature-bullets">
+        <li data-t="s6-b1">CSV export</li>
+        <li data-t="s6-b2">Detailed PDF reports</li>
+        <li data-t="s6-b3">Hours and absences breakdown</li>
+      </ul>
+    </div>
+    <div class="feature-visual">
+      <div class="screenshot-placeholder">
+        <div class="ph-inner">
+          <div class="ph-icon">📤</div>
+          <div class="ph-label" data-t="s6-ph">Screenshot coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" class="section">
+  <div class="section-eyebrow" data-t="price-label">Pricing</div>
+  <div class="section-title"><span data-t="price-title-app">ShiftForge</span> — <span style="font-weight: 400;" data-t="price-title-suffix">plan overview</span></div>
+  <p class="section-sub" data-t="price-sub">Start free and test all features without restrictions. Upgrade to a paid plan only when you are confident it is the right solution for you.</p>
+  <div class="pricing-grid">
+    <div class="pc">
+      <div class="pc-name" data-t="plan1">Trial period</div>
+      <div class="pc-price" data-t="trial-price">Free <small data-t="plan1-per">/ 7 days</small></div>
+      <div class="pc-desc" data-t="plan1-desc">Full access to all features. No credit card required.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" data-t="pf1">Unlimited workers during trial</div>
+      <div class="pc-feat" data-t="pf2">Cloud data sync</div>
+      <div class="pc-feat" data-t="pf3">Email support</div>
+    </div>
+    <div class="pc featured">
+      <div class="pc-badge" data-t="popular">Most popular</div>
+      <div class="pc-name" data-t="plan2">Basic</div>
+      <div class="pc-price">€19.99 <small data-t="plan2-per">/ mo</small></div>
+      <div class="pc-desc" data-t="plan2-desc">For small teams up to 15 workers. Automatic scheduling, absences, exports.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" data-t="pf4">Up to 15 workers</div>
+      <div class="pc-feat" data-t="pf5">Automatic schedule generation</div>
+      <div class="pc-feat" data-t="pf6">Absence management</div>
+      <div class="pc-feat" data-t="pf6b">CSV & PDF export</div>
+    </div>
+    <div class="pc">
+      <div class="pc-name" data-t="plan3">Premium</div>
+      <div class="pc-price">€39.99 <small data-t="plan3-per">/ mo</small></div>
+      <div class="pc-desc" data-t="plan3-desc">For growing teams up to 100 workers. Includes group scheduling.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" style="font-weight: 500; color: var(--text);" data-t="price-premium-includes">All Basic features plus:</div>
+      <div class="pc-feat" data-t="pf7">Up to 100 workers</div>
+      <div class="pc-feat" data-t="pf8">Group management</div>
+      <div class="pc-feat" data-t="pf13">Separate group schedules</div>
+      <div class="pc-feat" data-t="pf9">Priority support</div>
+    </div>
+    <div class="pc">
+      <div class="pc-name" data-t="plan4">Business</div>
+      <div class="pc-price">€79.99 <small data-t="plan4-per">/ mo</small></div>
+      <div class="pc-desc" data-t="plan4-desc">For large organizations. Unlimited workers and full feature access.</div>
+      <hr class="pc-divider">
+      <div class="pc-feat" style="font-weight: 500; color: var(--text);" data-t="price-business-includes">All Premium features plus:</div>
+      <div class="pc-feat" data-t="pf10">Unlimited workers</div>
+      <div class="pc-feat" data-t="pf11">Advanced audit log</div>
+      <div class="pc-feat" data-t="pf12">Dedicated support</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="section-eyebrow" data-t="cta-eyebrow">Get started</div>
+  <div class="cta-title" data-t="cta-title">Try ShiftForge free for 7 days</div>
+  <p class="cta-sub" data-t="cta-sub">No credit card required. Full access from day one. Cancel anytime.</p>
+  <a href="#" class="btn-primary" data-t="cta-btn">Open app — it's free</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a class="footer-logo" href="/"><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></a>
+      <div class="footer-copy" data-t="footer-copy">© 2026 ei-apps. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="privacy-policy.html" class="footer-link" data-t="ft-privacy">Privacy policy</a>
+      <a href="tos.html" class="footer-link" data-t="ft-terms">Terms of use</a>
+      <a href="mailto:info@ei-apps.com" class="footer-link" data-t="ft-contact">Contact</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
+<script>
+const T = {
+  bs: {
+    'nav-apps':'Aplikacije','nav-pricing':'Cijene','nav-faq':'FAQ','nav-open-app':'Otvori aplikaciju',
+    'back-link':'← ei-apps.com',
+    'hero-title':'ShiftForge',
+    'hero-sub':'Sistem za upravljanje rasporedima smjena',
+    'btn-open':'Otvori aplikaciju','btn-pricing':'Pogledaj cijene',
+    's1-eyebrow':'Raspored','s1-title':'Automatsko generisanje rasporeda','s1-desc':'Automatsko generisanje rasporeda na osnovu dostupnosti radnika, odsustava, praznika i pravila smjena. Ručne prilagodbe s detekcijom sukoba.',
+    's1-b1':'Automatski generiši sedmične rasporede','s1-b2':'Detekcija sukoba za ručne izmjene','s1-b3':'Integracija praznika','s1-ph':'Screenshot dolazi uskoro',
+    's2-eyebrow':'Radnici','s2-title':'Upravljanje radnicima','s2-desc':'Dodaj radnike, dodjeljuj kategorije i grupe, postavi sedmične limite sati i cikluse rotacije vikendom.',
+    's2-b1':'Kategorije i grupe radnika','s2-b2':'Sedmični limiti sati','s2-b3':'Pravila rotacije vikendom','s2-ph':'Screenshot dolazi uskoro',
+    's3-eyebrow':'Odsustva','s3-title':'Upravljanje odsustvima','s3-desc':'Radnici podnose zahtjeve za odsustvom. Administrator odobrava ili odbacuje — odobrena odsustva automatski uklanjaju radnika sa smjena.',
+    's3-b1':'Zahtjevi za odsustvom radnika','s3-b2':'Tok odobravanja/odbacivanja','s3-b3':'Automatska sinhronizacija sa rasporedom','s3-ph':'Screenshot dolazi uskoro',
+    's4-eyebrow':'Tipovi smjena','s4-title':'Prilagođeni tipovi smjena','s4-desc':'Definiši prilagođene tipove smjena sa vremenima početka/kraja, bojama i ikonicama. Podrška za podjeljene smjene i pravila pauza.',
+    's4-b1':'Prilagođene smjene s bojama','s4-b2':'Podrška za podeljene smjene','s4-b3':'Pravila pauza','s4-ph':'Screenshot dolazi uskoro',
+    's5-eyebrow':'Kontrolna tabla','s5-title':'Kontrolna tabla u realnom vremenu','s5-desc':'Pregled aktivnih radnika, odsustava, sedmičnih sati, upozorenja za prekovremeni rad, zahtjeva za zamjenu i revizijskog dnevnika.',
+    's5-b1':'Upozorenja za prekovremeni rad','s5-b2':'Upravljanje zahtevima za zamjenu','s5-b3':'Revizijski dnevnik','s5-ph':'Screenshot dolazi uskoro',
+    's6-eyebrow':'Izvoz','s6-title':'Izvoz i izvještaji','s6-desc':'Izvoz rasporeda u CSV ili detaljni PDF sa satima i odsustvima po radniku.',
+    's6-b1':'Izvoz u CSV','s6-b2':'Detaljni PDF izvještaji','s6-b3':'Prikaz sati i odsustava','s6-ph':'Screenshot dolazi uskoro',
+    'price-label':'Cijene','price-title-app':'ShiftForge','price-title-suffix':'pregled planova',
+    'price-sub':'Počnite besplatno i testirajte sve funkcije bez ograničenja. Pređite na plaćeni plan tek kada budete sigurni da je rješenje pravo za vas.',
+    'plan1':'Probni period','trial-price':'Besplatno','plan1-per':'/ 7 dana','plan1-desc':'Puni pristup svim funkcijama. Nije potrebna kreditna kartica.',
+    'pf1':'Neograničen broj radnika tokom probnog perioda','pf2':'Cloud sinhronizacija podataka','pf3':'Email podrška',
+    'popular':'Najpopularnije','plan2':'Osnovni','plan2-per':'/ mj','plan2-desc':'Za male timove do 15 radnika. Automatsko planiranje, odsustva, izvoz.',
+    'pf4':'Do 15 radnika','pf5':'Automatsko generisanje rasporeda','pf6':'Upravljanje odsustvima','pf6b':'CSV i PDF izvoz',
+    'plan3':'Premium','plan3-per':'/ mj','plan3-desc':'Za rastuće timove do 100 radnika. Uključuje grupno planiranje.',
+    'price-premium-includes':'Sve Osnovne funkcije plus:',
+    'pf7':'Do 100 radnika','pf8':'Grupno upravljanje','pf13':'Posebni rasporedi po grupama','pf9':'Prioritetna podrška',
+    'plan4':'Business','plan4-per':'/ mj','plan4-desc':'Za velike organizacije. Neograničen broj radnika i puni pristup svim funkcijama.',
+    'price-business-includes':'Sve Premium funkcije plus:',
+    'pf10':'Neograničen broj radnika','pf11':'Napredni revizijski dnevnik','pf12':'Dedicirana podrška',
+    'cta-eyebrow':'Početak','cta-title':'Isprobaj ShiftForge besplatno 7 dana',
+    'cta-sub':'Nije potrebna kreditna kartica. Puni pristup od prvog dana. Otkaži u bilo kom trenutku.',
+    'cta-btn':'Otvori aplikaciju — besplatno',
+    'footer-copy':'© 2026 ei-apps. Sva prava zadržana.',
+    'ft-privacy':'Politika privatnosti','ft-terms':'Uslovi korištenja','ft-contact':'Kontakt'
+  },
+  en: {
+    'nav-apps':'Apps','nav-pricing':'Pricing','nav-faq':'FAQ','nav-open-app':'Open app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'ShiftForge',
+    'hero-sub':'Schedule Management System',
+    'btn-open':'Open app','btn-pricing':'View pricing',
+    's1-eyebrow':'Schedule','s1-title':'Automatic schedule generation','s1-desc':'Automatic schedule generation based on worker availability, absences, holidays and shift rules. Manual adjustments with conflict detection.',
+    's1-b1':'Auto-generate weekly schedules','s1-b2':'Conflict detection for manual edits','s1-b3':'Holiday integration','s1-ph':'Screenshot coming soon',
+    's2-eyebrow':'Workers','s2-title':'Worker management','s2-desc':'Add workers, assign categories and groups, set weekly hour limits and weekend rotation cycles.',
+    's2-b1':'Worker categories and groups','s2-b2':'Weekly hour limits','s2-b3':'Weekend rotation rules','s2-ph':'Screenshot coming soon',
+    's3-eyebrow':'Absences','s3-title':'Absence management','s3-desc':'Workers submit absence requests. Admin approves or rejects — approved absences automatically remove the worker from shifts.',
+    's3-b1':'Worker absence requests','s3-b2':'Approve/reject workflow','s3-b3':'Auto-sync with schedule','s3-ph':'Screenshot coming soon',
+    's4-eyebrow':'Shift Types','s4-title':'Custom shift types','s4-desc':'Define custom shift types with start/end times, colors and icons. Support for split shifts and break policies.',
+    's4-b1':'Custom shifts with colors','s4-b2':'Split shift support','s4-b3':'Break policies','s4-ph':'Screenshot coming soon',
+    's5-eyebrow':'Dashboard','s5-title':'Real-time dashboard','s5-desc':'Overview of active workers, absences, weekly hours, overtime warnings, swap requests and audit log.',
+    's5-b1':'Overtime warnings','s5-b2':'Swap request management','s5-b3':'Audit log','s5-ph':'Screenshot coming soon',
+    's6-eyebrow':'Export','s6-title':'Export & reports','s6-desc':'Export schedules to CSV or detailed PDF with hours and absences per worker.',
+    's6-b1':'CSV export','s6-b2':'Detailed PDF reports','s6-b3':'Hours and absences breakdown','s6-ph':'Screenshot coming soon',
+    'price-label':'Pricing','price-title-app':'ShiftForge','price-title-suffix':'plan overview',
+    'price-sub':'Start free and test all features without restrictions. Upgrade to a paid plan only when you are confident it is the right solution for you.',
+    'plan1':'Trial period','trial-price':'Free','plan1-per':'/ 7 days','plan1-desc':'Full access to all features. No credit card required.',
+    'pf1':'Unlimited workers during trial','pf2':'Cloud data sync','pf3':'Email support',
+    'popular':'Most popular','plan2':'Basic','plan2-per':'/ mo','plan2-desc':'For small teams up to 15 workers. Automatic scheduling, absences, exports.',
+    'pf4':'Up to 15 workers','pf5':'Automatic schedule generation','pf6':'Absence management','pf6b':'CSV & PDF export',
+    'plan3':'Premium','plan3-per':'/ mo','plan3-desc':'For growing teams up to 100 workers. Includes group scheduling.',
+    'price-premium-includes':'All Basic features plus:',
+    'pf7':'Up to 100 workers','pf8':'Group management','pf13':'Separate group schedules','pf9':'Priority support',
+    'plan4':'Business','plan4-per':'/ mo','plan4-desc':'For large organizations. Unlimited workers and full feature access.',
+    'price-business-includes':'All Premium features plus:',
+    'pf10':'Unlimited workers','pf11':'Advanced audit log','pf12':'Dedicated support',
+    'cta-eyebrow':'Get started','cta-title':'Try ShiftForge free for 7 days',
+    'cta-sub':'No credit card required. Full access from day one. Cancel anytime.',
+    'cta-btn':'Open app — it\'s free',
+    'footer-copy':'© 2026 ei-apps. All rights reserved.',
+    'ft-privacy':'Privacy policy','ft-terms':'Terms of use','ft-contact':'Contact'
+  },
+  de: {
+    'nav-apps':'Apps','nav-pricing':'Preise','nav-faq':'FAQ','nav-open-app':'App öffnen',
+    'back-link':'← ei-apps.com',
+    'hero-title':'ShiftForge',
+    'hero-sub':'System zur Verwaltung von Schichtplänen',
+    'btn-open':'App öffnen','btn-pricing':'Preise ansehen',
+    's1-eyebrow':'Zeitplan','s1-title':'Automatische Zeitplanerstellung','s1-desc':'Automatische Zeitplanerstellung basierend auf Mitarbeiterverfügbarkeit, Abwesenheiten, Feiertagen und Schichtregeln. Manuelle Anpassungen mit Konflikterkennung.',
+    's1-b1':'Wöchentliche Zeitpläne automatisch generieren','s1-b2':'Konflikterkennung für manuelle Bearbeitungen','s1-b3':'Feiertagsintegration','s1-ph':'Screenshot kommt bald',
+    's2-eyebrow':'Mitarbeiter','s2-title':'Mitarbeiterverwaltung','s2-desc':'Mitarbeiter hinzufügen, Kategorien und Gruppen zuweisen, wöchentliche Stundenzahlgrenzen und Wochenendrotationszyklen festlegen.',
+    's2-b1':'Mitarbeiterkategorien und -gruppen','s2-b2':'Wöchentliche Stundenzahlgrenzen','s2-b3':'Wochenendrotationsregeln','s2-ph':'Screenshot kommt bald',
+    's3-eyebrow':'Abwesenheiten','s3-title':'Abwesenheitsverwaltung','s3-desc':'Mitarbeiter senden Abwesenheitsanfragen. Administrator genehmigt oder ablehnt — genehmigte Abwesenheiten entfernen den Mitarbeiter automatisch aus den Schichten.',
+    's3-b1':'Mitarbeiter-Abwesenheitsanfragen','s3-b2':'Genehmigungs-/Ablehnungsworkflow','s3-b3':'Automatische Synchronisation mit Zeitplan','s3-ph':'Screenshot kommt bald',
+    's4-eyebrow':'Schichttypen','s4-title':'Benutzerdefinierte Schichttypen','s4-desc':'Definiere benutzerdefinierte Schichttypen mit Start-/Endzeiten, Farben und Symbolen. Unterstützung für geteilte Schichten und Pausenzeitenregeln.',
+    's4-b1':'Benutzerdefinierte Schichten mit Farben','s4-b2':'Unterstützung für geteilte Schichten','s4-b3':'Pausenzeitenregeln','s4-ph':'Screenshot kommt bald',
+    's5-eyebrow':'Dashboard','s5-title':'Echtzeit-Dashboard','s5-desc':'Übersicht aktiver Mitarbeiter, Abwesenheiten, wöchentlicher Stunden, Überstundenwarnungen, Tauschanfragen und Audit-Log.',
+    's5-b1':'Überstundenwarnungen','s5-b2':'Tauschanfrageverwaltung','s5-b3':'Audit-Log','s5-ph':'Screenshot kommt bald',
+    's6-eyebrow':'Export','s6-title':'Export & Berichte','s6-desc':'Exportiere Zeitpläne als CSV oder detailliertes PDF mit Stunden und Abwesenheiten pro Mitarbeiter.',
+    's6-b1':'CSV-Export','s6-b2':'Detaillierte PDF-Berichte','s6-b3':'Stunden- und Abwesenheitsaufteilung','s6-ph':'Screenshot kommt bald',
+    'price-label':'Preise','price-title-app':'ShiftForge','price-title-suffix':'Planübersicht',
+    'price-sub':'Starten Sie kostenlos und testen Sie alle Funktionen ohne Einschränkungen. Upgrade auf einen bezahlten Plan nur, wenn Sie sicher sind, dass es die richtige Lösung für Sie ist.',
+    'plan1':'Testphase','trial-price':'Kostenlos','plan1-per':'/ 7 Tage','plan1-desc':'Voller Zugriff auf alle Funktionen. Keine Kreditkarte erforderlich.',
+    'pf1':'Unbegrenzte Mitarbeiter während der Testphase','pf2':'Cloud-Datensynchronisation','pf3':'E-Mail-Support',
+    'popular':'Beliebteste','plan2':'Basic','plan2-per':'/ Mo','plan2-desc':'Für kleine Teams bis zu 15 Mitarbeitern. Automatische Planung, Abwesenheiten, Exporte.',
+    'pf4':'Bis zu 15 Mitarbeitern','pf5':'Automatische Zeitplanerstellung','pf6':'Abwesenheitsverwaltung','pf6b':'CSV- und PDF-Export',
+    'plan3':'Premium','plan3-per':'/ Mo','plan3-desc':'Für wachsende Teams bis zu 100 Mitarbeitern. Inklusive Gruppenplanung.',
+    'price-premium-includes':'Alle Basic-Funktionen plus:',
+    'pf7':'Bis zu 100 Mitarbeitern','pf8':'Gruppenverwaltung','pf13':'Separate Gruppenzeitpläne','pf9':'Prioritäts-Support',
+    'plan4':'Business','plan4-per':'/ Mo','plan4-desc':'Für große Organisationen. Unbegrenzte Mitarbeiter und voller Zugriff auf alle Funktionen.',
+    'price-business-includes':'Alle Premium-Funktionen plus:',
+    'pf10':'Unbegrenzte Mitarbeiter','pf11':'Erweitertes Audit-Log','pf12':'Dedizierter Support',
+    'cta-eyebrow':'Loslegen','cta-title':'Testen Sie ShiftForge 7 Tage kostenlos',
+    'cta-sub':'Keine Kreditkarte erforderlich. Voller Zugriff ab Tag eins. Jederzeit kündbar.',
+    'cta-btn':'App öffnen — kostenlos',
+    'footer-copy':'© 2026 ei-apps. Alle Rechte vorbehalten.',
+    'ft-privacy':'Datenschutzrichtlinie','ft-terms':'Nutzungsbedingungen','ft-contact':'Kontakt'
+  },
+  fr: {
+    'nav-apps':'Applications','nav-pricing':'Tarifs','nav-faq':'FAQ','nav-open-app':'Ouvrir l\'app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'ShiftForge',
+    'hero-sub':'Système de gestion des horaires de travail',
+    'btn-open':'Ouvrir l\'app','btn-pricing':'Voir les tarifs',
+    's1-eyebrow':'Planning','s1-title':'Génération automatique du planning','s1-desc':'Génération automatique du planning en fonction de la disponibilité des salariés, des absences, des jours fériés et des règles de poste. Ajustements manuels avec détection des conflits.',
+    's1-b1':'Génération automatiquement les plannings hebdomadaires','s1-b2':'Détection des conflits pour les modifications manuelles','s1-b3':'Intégration des jours fériés','s1-ph':'Capture d\'écran à venir',
+    's2-eyebrow':'Salariés','s2-title':'Gestion des salariés','s2-desc':'Ajoutez des salariés, attribuez des catégories et des groupes, définissez des limites hebdomadaires et des cycles de rotation week-end.',
+    's2-b1':'Catégories et groupes de salariés','s2-b2':'Limites hebdomadaires d\'heures','s2-b3':'Règles de rotation week-end','s2-ph':'Capture d\'écran à venir',
+    's3-eyebrow':'Absences','s3-title':'Gestion des absences','s3-desc':'Les salariés soumettent des demandes d\'absence. L\'administrateur approuve ou refuse — les absences approuvées retirent automatiquement le salarié des postes.',
+    's3-b1':'Demandes d\'absence des salariés','s3-b2':'Flux d\'approbation/refus','s3-b3':'Synchronisation automatique avec le planning','s3-ph':'Capture d\'écran à venir',
+    's4-eyebrow':'Types de poste','s4-title':'Types de poste personnalisés','s4-desc':'Définissez des types de poste personnalisés avec des heures de début/fin, des couleurs et des icônes. Prise en charge des postes fractionnés et des règles de pause.',
+    's4-b1':'Postes personnalisés avec couleurs','s4-b2':'Prise en charge des postes fractionnés','s4-b3':'Règles de pause','s4-ph':'Capture d\'écran à venir',
+    's5-eyebrow':'Tableau de bord','s5-title':'Tableau de bord en temps réel','s5-desc':'Aperçu des salariés actifs, des absences, des heures hebdomadaires, des alertes heures supplémentaires, des demandes d\'échange et du journal d\'audit.',
+    's5-b1':'Alertes heures supplémentaires','s5-b2':'Gestion des demandes d\'échange','s5-b3':'Journal d\'audit','s5-ph':'Capture d\'écran à venir',
+    's6-eyebrow':'Export','s6-title':'Export et rapports','s6-desc':'Exportez les plannings en CSV ou en PDF détaillé avec les heures et les absences par salarié.',
+    's6-b1':'Export CSV','s6-b2':'Rapports PDF détaillés','s6-b3':'Répartition des heures et des absences','s6-ph':'Capture d\'écran à venir',
+    'price-label':'Tarifs','price-title-app':'ShiftForge','price-title-suffix':'aperçu des plans',
+    'price-sub':'Commencez gratuitement et testez toutes les fonctionnalités sans restrictions. Passez à un plan payant uniquement lorsque vous êtes convaincu que c\'est la bonne solution pour vous.',
+    'plan1':'Période d\'essai','trial-price':'Gratuit','plan1-per':'/ 7 jours','plan1-desc':'Accès complet à toutes les fonctionnalités. Aucune carte bancaire requise.',
+    'pf1':'Salariés illimités pendant l\'essai','pf2':'Synchronisation cloud','pf3':'Support par email',
+    'popular':'Plus populaire','plan2':'Basic','plan2-per':'/ mois','plan2-desc':'Pour les petites équipes jusqu\'à 15 salariés. Planification automatique, absences, exports.',
+    'pf4':'Jusqu\'à 15 salariés','pf5':'Génération automatique du planning','pf6':'Gestion des absences','pf6b':'Export CSV et PDF',
+    'plan3':'Premium','plan3-per':'/ mois','plan3-desc':'Pour les équipes en croissance jusqu\'à 100 salariés. Inclut la planification de groupe.',
+    'price-premium-includes':'Toutes les fonctionnalités Basic plus :',
+    'pf7':'Jusqu\'à 100 salariés','pf8':'Gestion de groupe','pf13':'Horaires séparés par groupe','pf9':'Support prioritaire',
+    'plan4':'Business','plan4-per':'/ mois','plan4-desc':'Pour les grandes organisations. Salariés illimités et accès complet aux fonctionnalités.',
+    'price-business-includes':'Toutes les fonctionnalités Premium plus :',
+    'pf10':'Salariés illimités','pf11':'Journal d\'audit avancé','pf12':'Support dédié',
+    'cta-eyebrow':'Commencer','cta-title':'Essayer ShiftForge gratuitement pendant 7 jours',
+    'cta-sub':'Aucune carte bancaire requise. Accès complet dès le premier jour. Résiliation à tout moment.',
+    'cta-btn':'Ouvrir l\'app — c\'est gratuit',
+    'footer-copy':'© 2026 ei-apps. Tous droits réservés.',
+    'ft-privacy':'Politique de confidentialité','ft-terms':'Conditions d\'utilisation','ft-contact':'Contact'
+  },
+  es: {
+    'nav-apps':'Aplicaciones','nav-pricing':'Precios','nav-faq':'FAQ','nav-open-app':'Abrir app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'ShiftForge',
+    'hero-sub':'Sistema de gestión de horarios de turnos',
+    'btn-open':'Abrir app','btn-pricing':'Ver precios',
+    's1-eyebrow':'Horario','s1-title':'Generación automática de horarios','s1-desc':'Generación automática de horarios según disponibilidad de trabajadores, ausencias, festivos y reglas de turno. Ajustes manuales con detección de conflictos.',
+    's1-b1':'Generar automáticamente horarios semanales','s1-b2':'Detección de conflictos para ediciones manuales','s1-b3':'Integración de festivos','s1-ph':'Captura de pantalla próximamente',
+    's2-eyebrow':'Trabajadores','s2-title':'Gestión de trabajadores','s2-desc':'Añade trabajadores, asigna categorías y grupos, establece límites de horas semanales y ciclos de rotación de fin de semana.',
+    's2-b1':'Categorías y grupos de trabajadores','s2-b2':'Límites de horas semanales','s2-b3':'Reglas de rotación de fin de semana','s2-ph':'Captura de pantalla próximamente',
+    's3-eyebrow':'Ausencias','s3-title':'Gestión de ausencias','s3-desc':'Los trabajadores envían solicitudes de ausencia. El administrador aprueba o rechaza — las ausencias aprobadas eliminan automáticamente al trabajador de los turnos.',
+    's3-b1':'Solicitudes de ausencia de trabajadores','s3-b2':'Flujo de aprobación/rechazo','s3-b3':'Sincronización automática con el horario','s3-ph':'Captura de pantalla próximamente',
+    's4-eyebrow':'Tipos de turno','s4-title':'Tipos de turno personalizados','s4-desc':'Define tipos de turno personalizados con horas de inicio/fin, colores e íconos. Soporte para turnos divididos y políticas de descanso.',
+    's4-b1':'Turnos personalizados con colores','s4-b2':'Soporte para turnos divididos','s4-b3':'Políticas de descanso','s4-ph':'Captura de pantalla próximamente',
+    's5-eyebrow':'Panel','s5-title':'Panel en tiempo real','s5-desc':'Resumen de trabajadores activos, ausencias, horas semanales, alertas de horas extras, solicitudes de intercambio y registro de auditoría.',
+    's5-b1':'Alertas de horas extras','s5-b2':'Gestión de solicitudes de intercambio','s5-b3':'Registro de auditoría','s5-ph':'Captura de pantalla próximamente',
+    's6-eyebrow':'Exportar','s6-title':'Exportar y informes','s6-desc':'Exporta horarios a CSV o PDF detallado con horas y ausencias por trabajador.',
+    's6-b1':'Exportar a CSV','s6-b2':'Informes PDF detallados','s6-b3':'Desglose de horas y ausencias','s6-ph':'Captura de pantalla próximamente',
+    'price-label':'Precios','price-title-app':'ShiftForge','price-title-suffix':'resumen de planes',
+    'price-sub':'Comienza gratis y prueba todas las funciones sin restricciones. Actualiza a un plan pagado solo cuando estés seguro que es la solución adecuada para ti.',
+    'plan1':'Período de prueba','trial-price':'Gratis','plan1-per':'/ 7 días','plan1-desc':'Acceso completo a todas las funciones. No se requiere tarjeta de crédito.',
+    'pf1':'Trabajadores ilimitados durante la prueba','pf2':'Sincronización en la nube','pf3':'Soporte por correo electrónico',
+    'popular':'Más popular','plan2':'Basic','plan2-per':'/ mes','plan2-desc':'Para equipos pequeños de hasta 15 trabajadores. Programación automática, ausencias, exportaciones.',
+    'pf4':'Hasta 15 trabajadores','pf5':'Generación automática de horarios','pf6':'Gestión de ausencias','pf6b':'Exportación CSV y PDF',
+    'plan3':'Premium','plan3-per':'/ mes','plan3-desc':'Para equipos en crecimiento de hasta 100 trabajadores. Incluye programación de grupos.',
+    'price-premium-includes':'Todas las funciones de Basic más:',
+    'pf7':'Hasta 100 trabajadores','pf8':'Gestión de grupo','pf13':'Horarios separados por grupo','pf9':'Soporte prioritario',
+    'plan4':'Business','plan4-per':'/ mes','plan4-desc':'Para organizaciones grandes. Trabajadores ilimitados y acceso completo a todas las funciones.',
+    'price-business-includes':'Todas las funciones de Premium más:',
+    'pf10':'Trabajadores ilimitados','pf11':'Registro de auditoría avanzado','pf12':'Soporte dedicado',
+    'cta-eyebrow':'Empezar','cta-title':'Prueba ShiftForge gratis durante 7 días',
+    'cta-sub':'No se requiere tarjeta de crédito. Acceso completo desde el primer día. Cancelar en cualquier momento.',
+    'cta-btn':'Abrir app — es gratis',
+    'footer-copy':'© 2026 ei-apps. Todos los derechos reservados.',
+    'ft-privacy':'Política de privacidad','ft-terms':'Términos de uso','ft-contact':'Contacto'
+  },
+  it: {
+    'nav-apps':'Applicazioni','nav-pricing':'Prezzi','nav-faq':'FAQ','nav-open-app':'Apri app',
+    'back-link':'← ei-apps.com',
+    'hero-title':'ShiftForge',
+    'hero-sub':'Sistema di gestione dei turni di lavoro',
+    'btn-open':'Apri app','btn-pricing':'Vedi prezzi',
+    's1-eyebrow':'Pianificazione','s1-title':'Generazione automatica della pianificazione','s1-desc':'Generazione automatica della pianificazione in base alla disponibilità dei dipendenti, alle assenze, alle festività e alle regole dei turni. Regolazioni manuali con rilevazione dei conflitti.',
+    's1-b1':'Generazione automatica delle pianificazioni settimanali','s1-b2':'Rilevazione dei conflitti per le modifiche manuali','s1-b3':'Integrazione delle festività','s1-ph':'Screenshot in arrivo',
+    's2-eyebrow':'Dipendenti','s2-title':'Gestione dei dipendenti','s2-desc':'Aggiungi dipendenti, assegna categorie e gruppi, imposta limiti settimanali e cicli di rotazione del fine settimana.',
+    's2-b1':'Categorie e gruppi di dipendenti','s2-b2':'Limiti settimanali di ore','s2-b3':'Regole di rotazione del fine settimana','s2-ph':'Screenshot in arrivo',
+    's3-eyebrow':'Assenze','s3-title':'Gestione delle assenze','s3-desc':'I dipendenti inviano richieste di assenza. L\'amministratore approva o rifiuta — le assenze approvate rimuovono automaticamente il dipendente dai turni.',
+    's3-b1':'Richieste di assenza dei dipendenti','s3-b2':'Flusso di approvazione/rifiuto','s3-b3':'Sincronizzazione automatica con la pianificazione','s3-ph':'Screenshot in arrivo',
+    's4-eyebrow':'Tipi di turno','s4-title':'Tipi di turno personalizzati','s4-desc':'Definisci tipi di turno personalizzati con orari di inizio/fine, colori e icone. Supporto per turni divisi e regole di pausa.',
+    's4-b1':'Turni personalizzati con colori','s4-b2':'Supporto per turni divisi','s4-b3':'Regole di pausa','s4-ph':'Screenshot in arrivo',
+    's5-eyebrow':'Dashboard','s5-title':'Dashboard in tempo reale','s5-desc':'Panoramica dei dipendenti attivi, delle assenze, delle ore settimanali, degli avvisi di straordinario, delle richieste di scambio e del registro di audit.',
+    's5-b1':'Avvisi di straordinario','s5-b2':'Gestione delle richieste di scambio','s5-b3':'Registro di audit','s5-ph':'Screenshot in arrivo',
+    's6-eyebrow':'Esporta','s6-title':'Esporta e report','s6-desc':'Esporta i piani in CSV o PDF dettagliato con ore e assenze per dipendente.',
+    's6-b1':'Esporta in CSV','s6-b2':'Report PDF dettagliati','s6-b3':'Ripartizione di ore e assenze','s6-ph':'Screenshot in arrivo',
+    'price-label':'Prezzi','price-title-app':'ShiftForge','price-title-suffix':'panoramica piani',
+    'price-sub':'Inizia gratuitamente e prova tutte le funzionalità senza restrizioni. Aggiorna a un piano a pagamento solo quando sei sicuro che è la soluzione giusta per te.',
+    'plan1':'Periodo di prova','trial-price':'Gratuito','plan1-per':'/ 7 giorni','plan1-desc':'Accesso completo a tutte le funzionalità. Nessuna carta di credito richiesta.',
+    'pf1':'Dipendenti illimitati durante la prova','pf2':'Sincronizzazione cloud','pf3':'Supporto email',
+    'popular':'Più popolare','plan2':'Basic','plan2-per':'/ mese','plan2-desc':'Per piccoli team fino a 15 dipendenti. Pianificazione automatica, assenze, esportazioni.',
+    'pf4':'Fino a 15 dipendenti','pf5':'Generazione automatica della pianificazione','pf6':'Gestione delle assenze','pf6b':'Esportazione CSV e PDF',
+    'plan3':'Premium','plan3-per':'/ mese','plan3-desc':'Per team in crescita fino a 100 dipendenti. Include la pianificazione di gruppo.',
+    'price-premium-includes':'Tutte le funzionalità di Basic plus:',
+    'pf7':'Fino a 100 dipendenti','pf8':'Gestione di gruppo','pf13':'Orari separati per gruppo','pf9':'Supporto prioritario',
+    'plan4':'Business','plan4-per':'/ mese','plan4-desc':'Per grandi organizzazioni. Dipendenti illimitati e accesso completo a tutte le funzionalità.',
+    'price-business-includes':'Tutte le funzionalità di Premium plus:',
+    'pf10':'Dipendenti illimitati','pf11':'Registro di audit avanzato','pf12':'Supporto dedicato',
+    'cta-eyebrow':'Inizia','cta-title':'Prova ShiftForge gratuitamente per 7 giorni',
+    'cta-sub':'Nessuna carta di credito richiesta. Accesso completo dal primo giorno. Cancella quando vuoi.',
+    'cta-btn':'Apri app — è gratuito',
+    'footer-copy':'© 2026 ei-apps. Tutti i diritti riservati.',
+    'ft-privacy':'Informativa sulla privacy','ft-terms':'Termini di utilizzo','ft-contact':'Contatto'
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const d = T[lang];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (d[key] !== undefined) el.textContent = d[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+function setLang(lang, flag, name, el) {
+  document.getElementById('lang-flag').textContent = flag;
+  document.getElementById('lang-name').textContent = name;
+  document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lang-dropdown').classList.remove('open');
+  applyLang(lang);
+}
+
+function toggleLang(e) {
+  e.stopPropagation();
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+
+document.addEventListener('click', () => {
+  document.getElementById('lang-dropdown').classList.remove('open');
+});
+
+applyLang('en');
+</script>
+</html>
+";
+}
+</seed:tool_call>

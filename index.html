@@ -804,14 +804,19 @@ body {
         </a>
         <a href="work-records.html" class="app-learn-more" data-t="btn-learn-more">Saznaj više</a>
       </div>
-      <!-- Coming soon -->
-      <div class="app-card app-card-coming">
-        <div class="app-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+      <!-- ShiftForge -->
+      <div class="app-card">
+        <img src="sf-promo.png" alt="ShiftForge Promo" class="app-promo-img">
+        <div class="app-name" data-t="app2-name">ShiftForge</div>
+        <div class="app-desc" data-t="sf-desc">A smart shift scheduling platform for teams of any size. Automate weekly schedules, manage absences, track hours, and coordinate your workforce — all in one place.</div>
+        <div class="app-pills">
+          <span class="pill pill-free" data-t="pill-free-trial">7-day free trial</span>
         </div>
-        <div class="app-name" data-t="coming-title">New application — coming soon</div>
-        <div class="app-desc" data-t="coming-desc">We are continuously developing new tools that address your real needs. Sign up to be the first notified at launch.</div>
-        <button class="btn-secondary" style="width:100%" data-t="btn-notify">Notify me</button>
+        <a href="#" class="app-btn" data-t="btn-open">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open app
+        </a>
+        <a href="shiftforge.html" class="app-learn-more" data-t="btn-learn-more">Learn more</a>
       </div>
     </div>
   </div>
@@ -1045,7 +1050,7 @@ const T = {
     'apps-sub':'Svaki alat razvijen je s jednim ciljem — maksimalna jednostavnost. Eliminiramo nepotrebnu složenost kako bismo vam pružili rješenje koje zaista funkcioniše u svakodnevici.',
     'app1-name':'Work Records',
     'er-desc':'Sveobuhvatna platforma za jednostavno upravljanje uslugama, unos naplata i dugovanja. Omogućava pregled ključnih informacija, zakazivanje termina i koordinaciju nad uposlenicima — dostupno s bilo kojeg uređaja, u svakom trenutku.',
-    'pill-free':'Besplatno 30 dana','pill-premium':'Premium plan','btn-open':'Otvori aplikaciju','btn-learn-more':'Saznaj više',
+    'pill-free':'Besplatno 30 dana','pill-premium':'Premium plan','pill-free-trial':'7-dnevni probni period','btn-open':'Otvori aplikaciju','btn-learn-more':'Saznaj više','app2-name':'ShiftForge','sf-desc':'Pametna platforma za izradu rasporeda smjena za timove bilo koje veličine. Automatizirajte tjedne rasporede, upravljajte odsustvima, pratite sate i koordinirajte radnu snagu — sve na jednom mjestu.',
     'coming-title':'Nova aplikacija — uskoro','coming-desc':'Kontinuirano radimo na novim alatima koji odgovaraju vašim stvarnim potrebama. Prijavite se kako biste bili prvi obaviješteni o lansiranju.',
     'btn-notify':'Obavijesti me',
     'how-label':'Kako početi','how-title':'Počnite za manje od minute',
@@ -1093,7 +1098,7 @@ const T = {
     'apps-sub':'Each tool is developed with one goal — maximum simplicity. We eliminate unnecessary complexity to provide a solution that truly works in everyday life.',
     'app1-name':'Work Records',
     'er-desc':'A comprehensive platform for easy service management, logging payments and debts. Enables an overview of key information, appointment scheduling, and employee coordination — accessible from any device, at any time.',
-    'pill-free':'Free 30 days','pill-premium':'Premium plan','btn-open':'Open app','btn-learn-more':'Learn more',
+    'pill-free':'Free 30 days','pill-premium':'Premium plan','pill-free-trial':'7-day free trial','btn-open':'Open app','btn-learn-more':'Learn more','app2-name':'ShiftForge','sf-desc':'A smart shift scheduling platform for teams of any size. Automate weekly schedules, manage absences, track hours, and coordinate your workforce — all in one place.',
     'coming-title':'New application — coming soon','coming-desc':'We are continuously developing new tools that address your real needs. Sign up to be the first notified at launch.',
     'btn-notify':'Notify me',
     'how-label':'How to start','how-title':'Up and running in under a minute',
@@ -1141,7 +1146,7 @@ const T = {
     'apps-sub':'Jedes Tool wurde mit einem klaren Zweck entwickelt — unnötige Komplexität zu beseitigen und eine Lösung zu liefern, die im täglichen Geschäftsbetrieb wirklich funktioniert.',
     'app1-name':'Work Records',
     'er-desc':'Eine umfassende Plattform zur Arbeitszeiterfassung, Serviceverwaltung und Abrechnung. Ermöglicht präzise tägliche Protokollierung, professionelle Berichtserstellung und einen klaren Überblick über wichtige Geschäftskennzahlen — von jedem Gerät aus zugänglich.',
-    'pill-free':'30 Tage kostenlos','pill-premium':'Premium-Plan','btn-open':'App öffnen','btn-learn-more':'Mehr erfahren',
+    'pill-free':'30 Tage kostenlos','pill-premium':'Premium-Plan','pill-free-trial':'7-tägige kostenlose Testphase','btn-open':'App öffnen','btn-learn-more':'Mehr erfahren','app2-name':'ShiftForge','sf-desc':'Eine intelligente Schichtplanungsplattform für Teams jeder Größe. Automatisieren Sie Wochenpläne, verwalten Sie Abwesenheiten und koordinieren Sie Ihre Belegschaft — alles an einem Ort.',
     'coming-title':'Neue App — demnächst','coming-desc':'Wir entwickeln kontinuierlich neue Tools, die echte Geschäftsanforderungen adressieren. Melden Sie sich an, um bei der Einführung als Erster informiert zu werden.',
     'btn-notify':'Benachrichtige mich',
     'how-label':'Wie starten','how-title':'In weniger als einer Minute einsatzbereit',
@@ -1189,7 +1194,7 @@ const T = {
     'apps-sub':'Chaque outil a été développé avec un objectif précis — éliminer la complexité inutile et fournir une solution qui fonctionne vraiment dans les opérations quotidiennes.',
     'app1-name':'Work Records',
     'er-desc':'Une plateforme complète pour le suivi du temps de travail, la gestion des services et la facturation. Permet un enregistrement précis de chaque journée, la création de rapports professionnels et une vue claire des indicateurs clés — accessible depuis n\'importe quel appareil.',
-    'pill-free':'30 jours gratuits','pill-premium':'Plan Premium','btn-open':'Ouvrir l\'app','btn-learn-more':'En savoir plus',
+    'pill-free':'30 jours gratuits','pill-premium':'Plan Premium','pill-free-trial':'Essai gratuit de 7 jours','btn-open':'Ouvrir l\'app','btn-learn-more':'En savoir plus','app2-name':'ShiftForge','sf-desc':'Une plateforme intelligente de planification des équipes pour toutes tailles d\'équipe. Automatisez les plannings hebdomadaires, gérez les absences et coordonnez votre personnel — en un seul endroit.',
     'coming-title':'Nouvelle application — bientôt','coming-desc':'Nous développons continuellement de nouveaux outils répondant aux besoins réels des entreprises. Inscrivez-vous pour être informé en premier lors du lancement.',
     'btn-notify':'M\'avertir',
     'how-label':'Comment démarrer','how-title':'Opérationnel en moins d\'une minute',
@@ -1237,7 +1242,7 @@ const T = {
     'apps-sub':'Cada herramienta se ha desarrollado con un propósito claro — eliminar la complejidad innecesaria y ofrecer una solución que realmente funciona en las operaciones diarias.',
     'app1-name':'Work Records',
     'er-desc':'Una plataforma integral para el seguimiento del tiempo de trabajo, gestión de servicios y facturación. Permite el registro preciso de cada jornada laboral, creación de informes profesionales y una visión clara de los indicadores clave del negocio — accesible desde cualquier dispositivo.',
-    'pill-free':'30 días gratis','pill-premium':'Plan Premium','btn-open':'Abrir app','btn-learn-more':'Saber más',
+    'pill-free':'30 días gratis','pill-premium':'Plan Premium','pill-free-trial':'Prueba gratuita de 7 días','btn-open':'Abrir app','btn-learn-more':'Saber más','app2-name':'ShiftForge','sf-desc':'Una plataforma inteligente de turnos para equipos de cualquier tamaño. Automatice horarios semanales, gestione ausencias y coordine su plantilla — todo en un solo lugar.',
     'coming-title':'Nueva aplicación — próximamente','coming-desc':'Desarrollamos continuamente nuevas herramientas que responden a las necesidades reales del negocio. Regístrese para ser el primero en ser notificado en el lanzamiento.',
     'btn-notify':'Notificarme',
     'how-label':'Cómo empezar','how-title':'Listo en menos de un minuto',
@@ -1283,7 +1288,7 @@ const T = {
     'apps-sub':'Ogni strumento è sviluppato con uno scopo chiaro — eliminare la complessità inutile e fornire una soluzione che funziona davvero nelle operazioni quotidiane.',
     'app1-name':'Work Records',
     'er-desc':'Una plataforma completa per il monitoraggio dell\'orario di lavoro, la gestione dei servizi e la fatturazione. Permette la registrazione precisa di ogni giornata, la creazione di report professionali e una chiara panoramica degli indicatori aziendali chiave — accessibile da qualsiasi dispositivo.',
-    'pill-free':'30 giorni gratis','pill-premium':'Piano Premium','btn-open':'Apri app','btn-learn-more':'Scopri di più',
+    'pill-free':'30 giorni gratis','pill-premium':'Piano Premium','pill-free-trial':'Prova gratuita di 7 giorni','btn-open':'Apri app','btn-learn-more':'Scopri di più','app2-name':'ShiftForge','sf-desc':'Una piattaforma intelligente per la pianificazione dei turni per team di qualsiasi dimensione. Automatizza i turni settimanali, gestisci le assenze e coordina il tuo personale — tutto in un unico posto.',
     'coming-title':'Nuova applicazione — prossimamente','coming-desc':'Sviluppiamo continuamente nuovi strumenti che rispondono alle reali esigenze aziendali. Registrati per essere il primo ad essere informato al lancio.',
     'btn-notify':'Avvisami',
     'how-label':'Come iniziare','how-title':'Operativo in meno di un minuto',
