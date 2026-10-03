@@ -698,6 +698,107 @@ body {
   #content-en { display: block; }
 </style>
 
+<meta name="theme-color" content="#0B0A2E">
+
+<style id="dark-theme">
+/* ===== ei-apps dark theme (gradijent tamno plava/ljubičasta do svijetlo plava) ===== */
+:root {
+  color-scheme: dark;
+  --brand-blue: #4F7EF7;
+  --brand-ink: #111827;
+  --blue: #8DB4FF;
+  --blue-dark: #BBD2FF;
+  --btn: #3F6FF0;
+  --btn-dark: #2F5BDB;
+  --blue-light: rgba(141,180,255,0.15);
+  --blue-mid: rgba(141,180,255,0.38);
+  --text: #F4F7FF;
+  --text-2: #E3EAFB;
+  --text-3: #CBD6F2;
+  --bg: rgba(12,14,64,0.42);
+  --bg-2: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.18);
+  --border-light: rgba(255,255,255,0.09);
+  --green-bg: rgba(16,185,129,0.18);
+  --green-text: #6EE7B7;
+  --green-border: rgba(110,231,183,0.45);
+  --amber-bg: rgba(245,158,11,0.18);
+  --amber-text: #FCD34D;
+  --amber-border: rgba(252,211,77,0.45);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 8px 28px rgba(3,5,30,0.45), 0 2px 8px rgba(3,5,30,0.3);
+}
+html { background: #07061F; }
+body {
+  background-color: #07061F;
+  background-image: linear-gradient(180deg,
+    #07061F 0%,
+    #100B3D 14%,
+    #14175C 34%,
+    #1B2A8F 58%,
+    #2554C4 78%,
+    #3E82E6 92%,
+    #66B0FF 100%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.nav { background: rgba(9,8,38,0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+/* logo: glow oko crnog obruba */
+.brand-logo {
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.95))
+          drop-shadow(0 0 7px rgba(255,255,255,0.6))
+          drop-shadow(0 0 16px rgba(120,170,255,0.9));
+}
+/* naziv: plavo "ei" i crno "-apps" na svijetloj podlozi */
+.nav-logo em, .footer-logo em { font-style: normal; color: var(--brand-blue); }
+.nav-logo span, .footer-logo span {
+  display: flex; align-items: center;
+  color: var(--brand-ink);
+  background: linear-gradient(135deg, #FFFFFF 0%, #DCE8FF 100%);
+  padding: 0.08em 0.42em 0.12em;
+  border-radius: 0.38em;
+  line-height: 1.2;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5), 0 0 18px rgba(130,170,255,0.55);
+}
+
+.btn-primary, .app-btn { background: var(--btn); color: #fff; }
+.btn-primary:hover, .app-btn:hover { background: var(--btn-dark); }
+
+.hero {
+  background:
+    radial-gradient(55% 70% at 50% 0%, rgba(124,92,255,0.38) 0%, transparent 70%),
+    radial-gradient(40% 60% at 85% 40%, rgba(79,126,247,0.25) 0%, transparent 70%);
+}
+.hero-badge svg { stroke: #8DB4FF; }
+
+.lang-dropdown { background: #14174A; }
+.lang-option:hover { background: rgba(255,255,255,0.09); }
+.back-bar { background: rgba(255,255,255,0.04); }
+
+.section, .section-full { background: rgba(6,8,48,0.22); }
+.pc, .feat, .app-card { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.pc.featured { box-shadow: 0 0 32px rgba(120,150,255,0.25); }
+.screenshot-img { border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(3,5,30,0.55); }
+.cta-section { background: rgba(8,10,50,0.40); border-top: 1px solid var(--border-light); }
+.footer { background: rgba(5,8,40,0.38); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+/* pravne stranice: dugi tekst na tamnom staklenom panelu radi čitljivosti */
+.legal-content {
+  background: rgba(8,10,50,0.58);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 36px;
+  color: #E3EAFB;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.legal-content h1:first-child, .legal-content h2:first-child { margin-top: 0; }
+.legal-content th { background: rgba(255,255,255,0.08); }
+.legal-content a { color: #9CC0FF; }
+.legal-title { color: #fff; }
+@media (max-width: 600px) { .legal-content { padding: 22px 18px; } }
+
+</style>
 </head>
 <body>
   <nav class="nav">
