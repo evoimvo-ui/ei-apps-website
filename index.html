@@ -215,6 +215,83 @@ body {
   gap: 12px;
 }
 .hero h1 em { font-style: normal; color: var(--brand-blue); }
+
+/* ─── HERO 3D LOGO ANIMATION ─── */
+.hero h1 .hero-logo-3d,
+.hero h1 .hero-logo-flipper {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.hero-logo-3d {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  perspective: 600px;
+}
+
+.hero-logo-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-origin: center center;
+  animation: heroLogoLoop 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-logo-3d .brand-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-logo-front {
+  transform: rotateY(0deg) translateZ(0.5px);
+}
+
+.hero-logo-back {
+  transform: rotateY(180deg) translateZ(0.5px);
+}
+
+@keyframes heroLogoLoop {
+  0% {
+    transform: scale(1) rotateY(0deg);
+  }
+  42.857% {
+    transform: scale(1.15) rotateY(0deg);
+  }
+  50% {
+    transform: scale(1.15) rotateY(360deg);
+  }
+  92.857% {
+    transform: scale(1) rotateY(360deg);
+  }
+  100% {
+    transform: scale(1) rotateY(720deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-logo-flipper {
+    animation: none;
+    transform: none;
+  }
+}
 .hero-tagline {
   font-size: clamp(16px, 2.5vw, 20px);
   color: var(--text-2);
@@ -842,7 +919,7 @@ body {
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#8DB4FF" stroke-width="2"><polygon points="8,2 10,6 14,7 11,10 12,14 8,12 4,14 5,10 2,7 6,6"/></svg>
       <span data-t="badge">Digital solutions for everyday challenges</span>
     </div>
-    <h1><img src="/Logowebapp.png" class="brand-logo" alt="Logo"><span><em>ei</em>-apps</span></h1>
+    <h1><span class="hero-logo-3d"><span class="hero-logo-flipper"><img src="/Logowebapp.png" class="brand-logo hero-logo-front" alt="Logo"><img src="/Logowebapp.png" class="brand-logo hero-logo-back" alt="" aria-hidden="true"></span></span><span><em>ei</em>-apps</span></h1>
     <p class="hero-tagline" data-t="hero-tagline">Applications for easier life and business</p>
     <p class="hero-sub" data-t="hero-sub">Purpose-built tools that help you streamline daily tasks, save time, and improve your own efficiency.</p>
     <div class="hero-btns">
